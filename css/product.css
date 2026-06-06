@@ -1,0 +1,141 @@
+/* ============================================================
+   CHStore — product.css
+   Styles khusus halaman produk (extend index.css)
+   ============================================================ */
+
+/* ── Breadcrumb ─────────────────────────────────────────────── */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 18px 0 0;
+  font-size: 12.5px;
+  color: var(--g500);
+}
+.breadcrumb a {
+  color: var(--g500);
+  transition: var(--ease);
+}
+.breadcrumb a:hover { color: var(--ink); }
+.breadcrumb-sep {
+  display: flex;
+  align-items: center;
+  color: var(--g300);
+}
+.breadcrumb-current {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ── Page Header ────────────────────────────────────────────── */
+.page-header {
+  padding: 16px 0 24px;
+}
+.page-title {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.page-subtitle {
+  font-size: 13px;
+  color: var(--g500);
+}
+
+/* ── Products Grid ──────────────────────────────────────────── */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 16px;
+  padding-bottom: 48px;
+}
+
+.products-grid .product-card {
+  min-width: unset;
+  width: 100%;
+}
+
+/* ── Skeleton ───────────────────────────────────────────────── */
+.prod-skeleton {
+  height: 280px;
+  border-radius: var(--r-lg);
+  background: linear-gradient(90deg, var(--g100) 25%, var(--g200) 50%, var(--g100) 75%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+/* ── Empty State ────────────────────────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+}
+.empty-icon {
+  font-size: 52px;
+  margin-bottom: 16px;
+  opacity: 0.3;
+}
+.empty-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.empty-sub {
+  font-size: 13.5px;
+  color: var(--g500);
+}
+
+/* ── Sort / Filter bar ──────────────────────────────────────── */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 12px;
+}
+.toolbar-count {
+  font-size: 13px;
+  color: var(--g500);
+}
+.toolbar-sort {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sort-label {
+  font-size: 12.5px;
+  color: var(--g500);
+  white-space: nowrap;
+}
+.sort-select {
+  height: 32px;
+  padding: 0 28px 0 10px;
+  border: 1px solid var(--g200);
+  border-radius: var(--r-full);
+  background: var(--white);
+  font-size: 12.5px;
+  font-family: inherit;
+  color: var(--ink);
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23AEAEB2' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  transition: var(--ease);
+}
+.sort-select:focus {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px var(--ink-08);
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .page-title { font-size: 20px; }
+  .toolbar { flex-direction: column; align-items: flex-start; }
+}

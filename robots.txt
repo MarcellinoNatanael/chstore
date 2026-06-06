@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://marcellinonatanael.github.io/chstore/sitemap.xml

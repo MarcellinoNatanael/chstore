@@ -1,0 +1,143 @@
+/* ============================================================
+   CHStore — index-admin.css
+   Styles khusus halaman dashboard (extend admin-layout.css)
+   ============================================================ */
+
+/* ── Stats Grid ─────────────────────────────────────────────── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--g200);
+  border-radius: var(--r-lg);
+  padding: 18px 20px;
+}
+.stat-card-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.stat-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--g500);
+  margin-bottom: 6px;
+}
+.stat-value {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.5px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-sub {
+  font-size: 11.5px;
+  color: var(--g400);
+}
+.stat-icon {
+  width: 40px; height: 40px;
+  border-radius: var(--r-md);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.stat-icon-default { background: #F2F2F7; color: var(--ink); }
+.stat-icon-green   { background: #EDFBF1; color: #166534; }
+.stat-icon-orange  { background: #FFF7ED; color: #9A3412; }
+.stat-icon-blue    { background: #EFF6FF; color: #1E40AF; }
+
+/* ── Dashboard Grid ─────────────────────────────────────────── */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 20px;
+  align-items: start;
+}
+.dashboard-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.admin-card-last { margin-bottom: 0; }
+
+/* ── Quick Actions ──────────────────────────────────────────── */
+.quick-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 16px 20px;
+}
+.quick-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 10px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--g200);
+  background: var(--g50);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: center;
+  transition: var(--ease);
+}
+.quick-action:hover {
+  border-color: var(--ink);
+  background: var(--white);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+.quick-action-icon {
+  width: 36px; height: 36px;
+  border-radius: var(--r-md);
+  background: var(--ink);
+  color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--ease);
+}
+.quick-action:hover .quick-action-icon {
+  transform: scale(1.05);
+}
+
+/* ── Empty State ────────────────────────────────────────────── */
+.admin-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--g400);
+  gap: 8px;
+}
+.admin-empty svg { opacity: 0.3; }
+.admin-empty p { font-size: 13px; }
+
+/* ── All-stock-ok state ─────────────────────────────────────── */
+.stock-ok {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 28px 20px;
+  gap: 6px;
+  color: var(--g500);
+  font-size: 13px;
+}
+.stock-ok svg { color: #22C55E; }
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .dashboard-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .stat-value { font-size: 22px; }
+}

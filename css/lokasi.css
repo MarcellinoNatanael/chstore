@@ -1,0 +1,202 @@
+/* ============================================================
+   CHStore — lokasi.css
+   Styles khusus halaman lokasi toko (extend index.css)
+   ============================================================ */
+
+/* ── Breadcrumb ─────────────────────────────────────────────── */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 18px 0 0;
+  font-size: 12.5px;
+  color: var(--g500);
+}
+.breadcrumb a {
+  color: var(--g500);
+  transition: var(--ease);
+}
+.breadcrumb a:hover { color: var(--ink); }
+.breadcrumb-sep {
+  display: flex;
+  align-items: center;
+  color: var(--g300);
+}
+.breadcrumb-current {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ── Page Header ────────────────────────────────────────────── */
+.page-header {
+  padding: 16px 0 20px;
+}
+.page-title {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.page-subtitle {
+  font-size: 13px;
+  color: var(--g500);
+}
+
+/* ── Lokasi Layout ──────────────────────────────────────────── */
+.lokasi-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  align-items: start;
+  padding-bottom: 52px;
+}
+
+/* ── Map ────────────────────────────────────────────────────── */
+.lokasi-map {
+  height: 440px;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  border: 1px solid var(--g200);
+  background: var(--g100);
+}
+.lokasi-map iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ── Info Panel ─────────────────────────────────────────────── */
+.lokasi-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.lokasi-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.3px;
+}
+.lokasi-name svg {
+  flex-shrink: 0;
+  color: var(--ink);
+}
+
+.lokasi-address {
+  font-size: 13.5px;
+  color: var(--g600);
+  line-height: 1.7;
+  padding-left: 26px;
+}
+
+/* ── Info Cards ─────────────────────────────────────────────── */
+.lokasi-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.lokasi-card {
+  background: var(--g50);
+  border: 1px solid var(--g200);
+  border-radius: var(--r-lg);
+  padding: 14px 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+.lokasi-card-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+.lokasi-card-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.lokasi-card-value {
+  font-size: 12px;
+  color: var(--g600);
+  line-height: 1.5;
+}
+.lokasi-card-link {
+  color: var(--ink);
+  font-weight: 600;
+  transition: var(--ease);
+}
+.lokasi-card-link:hover {
+  color: var(--g500);
+}
+
+/* ── Action Buttons ─────────────────────────────────────────── */
+.lokasi-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-maps {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: var(--r-full);
+  background: var(--ink);
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 700;
+  border: 1.5px solid var(--ink);
+  transition: var(--ease);
+  font-family: inherit;
+}
+.btn-maps:hover {
+  background: var(--white);
+  color: var(--ink);
+}
+
+.btn-wa {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: var(--r-full);
+  background: var(--white);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 700;
+  border: 1.5px solid var(--g200);
+  transition: var(--ease);
+  font-family: inherit;
+}
+.btn-wa:hover {
+  border-color: var(--ink);
+  background: var(--g50);
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 780px) {
+  .lokasi-layout {
+    grid-template-columns: 1fr;
+  }
+  .lokasi-map {
+    height: 300px;
+  }
+}
+@media (max-width: 480px) {
+  .lokasi-cards {
+    grid-template-columns: 1fr;
+  }
+  .lokasi-map {
+    height: 260px;
+  }
+}

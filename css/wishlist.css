@@ -1,0 +1,114 @@
+/* ============================================================
+   CHStore — wishlist.css
+   Styles khusus halaman wishlist (extend index.css)
+   ============================================================ */
+
+/* ── Breadcrumb ─────────────────────────────────────────────── */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 18px 0 0;
+  font-size: 12.5px;
+  color: var(--g500);
+}
+.breadcrumb a { color: var(--g500); transition: var(--ease); }
+.breadcrumb a:hover { color: var(--ink); }
+.breadcrumb-sep { display: flex; align-items: center; color: var(--g300); }
+.breadcrumb-current { color: var(--ink); font-weight: 600; }
+
+/* ── Page Header ────────────────────────────────────────────── */
+.page-header { padding: 16px 0 20px; }
+.page-title {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.page-subtitle { font-size: 13px; color: var(--g500); }
+
+/* ── Cart icon active state di header ──────────────────────── */
+.header-icon-btn.active { background: var(--g100); }
+
+/* ── Skeleton Grid ──────────────────────────────────────────── */
+.wish-skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 16px;
+  padding-bottom: 48px;
+}
+.prod-skeleton {
+  height: 280px;
+  border-radius: var(--r-lg);
+  background: linear-gradient(90deg, var(--g100) 25%, var(--g200) 50%, var(--g100) 75%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+/* ── Products Grid (diisi JS) ───────────────────────────────── */
+.wish-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 16px;
+  padding-bottom: 48px;
+}
+.wish-grid .product-card {
+  min-width: unset;
+  width: 100%;
+}
+
+/* ── Empty / Login State ────────────────────────────────────── */
+.wish-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 80px 20px;
+  gap: 12px;
+}
+.wish-empty-icon {
+  font-size: 52px;
+  opacity: 0.25;
+  line-height: 1;
+}
+.wish-empty-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.3px;
+}
+.wish-empty-desc {
+  font-size: 13.5px;
+  color: var(--g500);
+  max-width: 320px;
+  line-height: 1.65;
+}
+.wish-empty-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 8px;
+  padding: 11px 28px;
+  border-radius: var(--r-full);
+  background: var(--ink);
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 700;
+  border: 1.5px solid var(--ink);
+  transition: var(--ease);
+  font-family: inherit;
+}
+.wish-empty-btn:hover {
+  background: var(--white);
+  color: var(--ink);
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .wish-grid,
+  .wish-skeleton-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
