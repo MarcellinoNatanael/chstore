@@ -40,29 +40,62 @@
       <a href="index.html" class="logo" aria-label="CHStore Home">
         <img src="../img/CHStore Logo.png" alt="CHStore" class="logo-img">
       </a>
+
       <div class="search-bar">
         <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
           <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
         </svg>
         <input type="search" id="searchInput" placeholder="Cari produk" autocomplete="off">
-        <button class="search-filter-btn" aria-label="Filter">
+        <button class="search-filter-btn" id="filterToggleBtn" aria-label="Filter" aria-expanded="false">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="4" y1="6" x2="20" y2="6"/>
             <line x1="8" y1="12" x2="16" y2="12"/>
             <line x1="11" y1="18" x2="13" y2="18"/>
           </svg>
         </button>
+        <div class="filter-dropdown" id="filterDropdown">
+          <div class="filter-section">
+            <div class="filter-section-title">Urutkan</div>
+            <div class="filter-chips">
+              <button class="filter-chip active" data-filter-sort="terbaru">Terbaru</button>
+              <button class="filter-chip" data-filter-sort="terlaris">Terlaris</button>
+              <button class="filter-chip" data-filter-sort="termurah">Termurah</button>
+              <button class="filter-chip" data-filter-sort="termahal">Termahal</button>
+            </div>
+          </div>
+          <div class="filter-section">
+            <div class="filter-section-title">Kondisi</div>
+            <div class="filter-chips">
+              <button class="filter-chip active" data-filter-cond="semua">Semua</button>
+              <button class="filter-chip" data-filter-cond="baru">Baru</button>
+              <button class="filter-chip" data-filter-cond="second">Second</button>
+            </div>
+          </div>
+          <div class="filter-section">
+            <div class="filter-section-title">Rentang Harga</div>
+            <div class="filter-price-row">
+              <input type="text" class="filter-price-input" id="filterPriceMin" placeholder="Min (Rp)">
+              <span class="filter-price-sep">–</span>
+              <input type="text" class="filter-price-input" id="filterPriceMax" placeholder="Max (Rp)">
+            </div>
+          </div>
+          <div class="filter-actions">
+            <button class="filter-reset-btn" id="filterResetBtn">Reset</button>
+            <button class="filter-apply-btn" id="filterApplyBtn">Terapkan</button>
+          </div>
+        </div>
       </div>
-<div class="header-actions">
-      <a href="wishlist.html" class="header-icon-btn" aria-label="Keranjang">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-        </svg>
-        <span class="cart-label">Wishlist</span>
-      </a>
+
+      <div class="header-actions">
+        <a href="wishlist.html" class="header-icon-btn" aria-label="Wishlist">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+          <span class="cart-label">Wishlist</span>
+        </a>
+      </div>
     </div>
-  </div>
-  
+
     <nav class="main-nav" aria-label="Navigasi utama">
       <div class="nav-inner">
         <a href="index.html"                      class="nav-link" id="nav-home">Beranda</a>
@@ -104,11 +137,9 @@
       </div>
     </div>
 
-    <!-- Category Tabs — dinamis dari Supabase -->
     <div class="content-wrap">
       <div class="category-tabs" id="catTabs">
         <button class="cat-tab" data-slug="">Semua</button>
-        <!-- diisi JS dari Supabase -->
       </div>
     </div>
 
