@@ -532,33 +532,40 @@ ul { list-style: none; }
 
 .promo-inner {
   display: flex; flex-direction: column; align-items: center;
-  padding: 40px 32px 52px; position: relative; text-align: center;
+  padding: 28px 24px 44px; position: relative; text-align: center;
 }
 .promo-label {
   display: flex; align-items: center; gap: 8px;
-  font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 10px;
+  font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 6px;
 }
 .promo-headline {
-  font-size: 22px; font-weight: 800; color: #fff;
-  letter-spacing: -0.4px; margin-bottom: 20px;
+  font-size: 20px; font-weight: 800; color: #fff;
+  letter-spacing: -0.4px; margin-bottom: 14px;
 }
-.promo-img-wrap { width: 100%; max-width: 480px; margin: 0 auto 20px; }
+.promo-img-wrap {
+  width: 100%; max-width: 420px;
+  margin: 0 auto 14px;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
 .promo-img {
-  width: 100%; object-fit: contain;
-  filter: drop-shadow(0 16px 40px rgba(255,255,255,0.06));
+  width: 100%; object-fit: cover;
+  display: block;
+  border-radius: var(--r-lg);
+  filter: drop-shadow(0 8px 24px rgba(255,255,255,0.04));
   animation: floatY 3.2s ease-in-out infinite;
 }
 @keyframes floatY {
   0%,100% { transform: translateY(0); }
-  50%      { transform: translateY(-7px); }
+  50%      { transform: translateY(-5px); }
 }
 .promo-desc {
-  font-size: 12.5px; color: rgba(255,255,255,0.6);
-  line-height: 1.65; max-width: 420px; margin-bottom: 20px;
+  font-size: 12px; color: rgba(255,255,255,0.6);
+  line-height: 1.6; max-width: 380px; margin-bottom: 16px;
 }
 .promo-cta {
   display: inline-flex; align-items: center;
-  padding: 10px 28px; border-radius: var(--r-full);
+  padding: 9px 26px; border-radius: var(--r-full);
   font-size: 13px; font-weight: 700;
   border: 1.5px solid rgba(255,255,255,0.4); color: #fff;
   transition: var(--ease);
@@ -703,11 +710,12 @@ ul { list-style: none; }
   .nav-inner { justify-content: flex-start; }
 
   /* Promo */
-  .promo-inner { padding: 28px 20px 48px; }
-  .promo-label { font-size: 15px; }
-  .promo-headline { font-size: 18px; margin-bottom: 14px; }
-  .promo-desc { font-size: 11.5px; }
-  .promo-cta { padding: 9px 22px; font-size: 12px; }
+  .promo-inner { padding: 22px 16px 42px; }
+  .promo-label { font-size: 13px; }
+  .promo-headline { font-size: 16px; margin-bottom: 10px; }
+  .promo-img-wrap { max-width: 88%; }
+  .promo-desc { font-size: 11px; margin-bottom: 12px; }
+  .promo-cta { padding: 8px 20px; font-size: 12px; }
 
   /* Footer */
   .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
@@ -768,10 +776,12 @@ ul { list-style: none; }
   .product-img-area { height: 130px; }
 
   /* Promo */
-  .promo-inner { padding: 24px 16px 44px; }
-  .promo-headline { font-size: 16px; }
-  .promo-label { font-size: 13px; }
-  .promo-img-wrap { max-width: 90%; }
+  .promo-inner { padding: 18px 12px 38px; }
+  .promo-headline { font-size: 14px; letter-spacing: -0.2px; }
+  .promo-label { font-size: 12px; gap: 5px; }
+  .promo-img-wrap { max-width: 85%; margin-bottom: 10px; }
+  .promo-desc { font-size: 10.5px; max-width: 100%; margin-bottom: 10px; }
+  .promo-cta { padding: 7px 18px; font-size: 11.5px; }
 
   /* Footer */
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
