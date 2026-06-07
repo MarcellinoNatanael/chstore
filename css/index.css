@@ -131,8 +131,6 @@ ul { list-style: none; }
 
 .search-filter-wrap {
   position: relative;
-  display: flex;
-  align-items: center;
 }
 
 /* ── Filter Dropdown ── */
