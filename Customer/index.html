@@ -49,26 +49,29 @@
   ═══════════════════════════════════════ -->
   <header class="site-header">
 
-  <!-- ROW 1: Logo + Search + Cart -->
-  <div class="header-inner">
-    <a href="index.html" class="logo" aria-label="CHStore Home">
-      <img src="../img/CHStore Logo.png" alt="CHStore" class="logo-img">
-    </a>
+    <!-- ROW 1: Logo + Search + Cart -->
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="CHStore Home">
+        <img src="../img/CHStore Logo.png" alt="CHStore" class="logo-img">
+      </a>
 
-    <div class="search-bar">
-      <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-      </svg>
-      <input type="search" id="searchInput" placeholder="Cari produk" autocomplete="off">
-      <!-- Filter button + dropdown wrapped together -->
-      <div class="search-filter-wrap">
+      <!-- search-bar is the positioning context for both icon, button, AND dropdown -->
+      <div class="search-bar">
+        <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="search" id="searchInput" placeholder="Cari produk" autocomplete="off">
+
+        <!-- Filter button sits directly inside .search-bar so top:50% works correctly -->
         <button class="search-filter-btn" id="filterToggleBtn" aria-label="Filter" aria-expanded="false">
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <line x1="4" y1="6" x2="20" y2="6"/>
-    <line x1="8" y1="12" x2="16" y2="12"/>
-    <line x1="11" y1="18" x2="13" y2="18"/>
-  </svg>
-</button>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="4" y1="6" x2="20" y2="6"/>
+            <line x1="8" y1="12" x2="16" y2="12"/>
+            <line x1="11" y1="18" x2="13" y2="18"/>
+          </svg>
+        </button>
+
+        <!-- Dropdown also inside .search-bar so right:0 aligns to the bar edge -->
         <div class="filter-dropdown" id="filterDropdown">
           <!-- Urutan -->
           <div class="filter-section">
@@ -105,51 +108,48 @@
           </div>
         </div>
       </div>
+
+      <div class="header-actions">
+        <a href="wishlist.html" class="header-icon-btn" aria-label="Wishlist">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+          <span class="cart-label">Wishlist</span>
+        </a>
+      </div>
     </div>
 
-    <div class="header-actions">
-      <a href="wishlist.html" class="header-icon-btn" aria-label="Keranjang">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-        </svg>
-        <span class="cart-label">Wishlist</span>
-      </a>
-    </div>
-  </div>
-  <!-- TUTUP .header-inner DI SINI -->
+    <!-- ROW 2: Nav -->
+    <nav class="main-nav" aria-label="Navigasi utama">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-link active">Beranda</a>
+        <a href="product.html?category=mac" class="nav-link">Mac</a>
+        <a href="product.html?category=ipad" class="nav-link">iPad</a>
+        <a href="product.html?category=iphone" class="nav-link">iPhone</a>
+        <a href="product.html?category=aksesoris" class="nav-link">Aksesoris</a>
+        <a href="product.html?category=services" class="nav-link">Services</a>
+        <div class="nav-divider"></div>
+        <a href="lokasi.html" class="nav-link nav-lokasi">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          Lokasi Toko
+        </a>
+      </div>
+    </nav>
 
-  <!-- ROW 2: Nav -->
-  <nav class="main-nav" aria-label="Navigasi utama">
-    <div class="nav-inner">
-      <a href="index.html" class="nav-link active">Beranda</a>
-      <a href="product.html?category=mac" class="nav-link">Mac</a>
-      <a href="product.html?category=ipad" class="nav-link">iPad</a>
-      <a href="product.html?category=iphone" class="nav-link">iPhone</a>
-      <a href="product.html?category=aksesoris" class="nav-link">Aksesoris</a>
-      <a href="product.html?category=services" class="nav-link">Services</a>
-      <div class="nav-divider"></div>
-      <a href="lokasi.html" class="nav-link nav-lokasi">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-          <circle cx="12" cy="10" r="3"/>
-        </svg>
-        Lokasi Toko
-      </a>
-    </div>
-  </nav>
-
-</header>
+  </header>
 
   <!-- ═══════════════════════════════════════
        MAIN
   ═══════════════════════════════════════ -->
   <main>
 
-    <!-- HERO SLIDER — murni gambar -->
+    <!-- HERO SLIDER -->
     <section class="hero-section">
       <div class="content-wrap">
         <div class="hero-slider" id="heroSlider">
-
           <div class="hero-slide active">
             <img src="../img/download (1).jpg" alt="Promo 1" class="hero-img">
           </div>
@@ -162,8 +162,6 @@
           <div class="hero-slide">
             <img src="../img/download (4).jpg" alt="Promo 4" class="hero-img">
           </div>
-
-          <!-- Dots dengan background frosted pill -->
           <div class="hero-dots">
             <button class="hero-dot active" data-slide="0"></button>
             <button class="hero-dot" data-slide="1"></button>
@@ -174,7 +172,7 @@
       </div>
     </section>
 
-    <!-- PRODUCT CAROUSEL — Semua Produk -->
+    <!-- PRODUCT CAROUSEL — Produk Terbaru -->
     <section class="carousel-section">
       <div class="content-wrap">
         <div class="section-heading">
@@ -187,9 +185,7 @@
               <polyline points="15 18 9 12 15 6"/>
             </svg>
           </button>
-          <div class="carousel-track" id="productCarousel">
-            <!-- diisi JS -->
-          </div>
+          <div class="carousel-track" id="productCarousel"></div>
           <button class="carousel-arrow carousel-arrow-right" id="carouselNext" aria-label="Berikutnya">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <polyline points="9 18 15 12 9 6"/>
@@ -212,9 +208,7 @@
               <polyline points="15 18 9 12 15 6"/>
             </svg>
           </button>
-          <div class="carousel-track" id="carouselTerlaris">
-            <!-- diisi JS -->
-          </div>
+          <div class="carousel-track" id="carouselTerlaris"></div>
           <button class="carousel-arrow carousel-arrow-right" id="carouselNextTerlaris" aria-label="Berikutnya">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <polyline points="9 18 15 12 9 6"/>
@@ -237,9 +231,7 @@
               <polyline points="15 18 9 12 15 6"/>
             </svg>
           </button>
-          <div class="carousel-track" id="carouselUnggulan">
-            <!-- diisi JS -->
-          </div>
+          <div class="carousel-track" id="carouselUnggulan"></div>
           <button class="carousel-arrow carousel-arrow-right" id="carouselNextUnggulan" aria-label="Berikutnya">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <polyline points="9 18 15 12 9 6"/>
@@ -249,7 +241,7 @@
       </div>
     </section>
 
-    <!-- PROMO BANNER — animated slider -->
+    <!-- PROMO BANNER -->
     <section class="promo-section">
       <div class="content-wrap">
         <div class="promo-banner">
@@ -312,7 +304,7 @@
               </div>
             </div>
 
-                      <!-- Slide 4 -->
+            <!-- Slide 4 -->
             <div class="promo-slide-item">
               <div class="promo-inner">
                 <div class="promo-label">
@@ -324,7 +316,7 @@
                 <h2 class="promo-headline">Lebih ringan. Lebih pintar.</h2>
                 <div class="promo-img-wrap">
                   <img src="../img/download (4).jpg" alt="MacBook Neo" class="promo-img"
-                      onerror="this.src='https://placehold.co/480x300/2c2c2e/cccccc?text=MacBook+Neo'">
+                       onerror="this.src='https://placehold.co/480x300/2c2c2e/cccccc?text=MacBook+Neo'">
                 </div>
                 <p class="promo-desc">MacBook Neo hadir dengan chip generasi terbaru, layar yang lebih tajam, dan bobot yang semakin ringan. Produktivitas tanpa batas, seharian penuh.</p>
                 <a href="product.html?category=mac" class="promo-cta">Selengkapnya</a>
@@ -333,7 +325,6 @@
 
           </div>
 
-          <!-- Dots promo slider -->
           <div class="promo-dots" id="promoDots">
             <button class="promo-dot active" data-promo="0"></button>
             <button class="promo-dot" data-promo="1"></button>
