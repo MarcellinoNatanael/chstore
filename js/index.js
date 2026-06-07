@@ -19,6 +19,7 @@ function setFooterYear() {
   if (el) el.textContent = new Date().getFullYear();
 }
 
+/* ── Hero Slider ──────────────────────────────────────────── */
 function initHeroSlider() {
   let cur = 0;
   const slides = document.querySelectorAll('.hero-slide');
@@ -46,13 +47,110 @@ function initHeroSlider() {
   }
 }
 
+/* ── Promo Slider ─────────────────────────────────────────── */
+function initPromoSlider() {
+  const track = document.getElementById('promoTrack');
+  const dots  = document.querySelectorAll('#promoDots .promo-dot');
+  if (!track || !dots.length) return;
+
+  let cur = 0;
+  const total = dots.length;
+
+  function goTo(n) {
+    cur = ((n % total) + total) % total;
+    track.style.transform = `translateX(-${cur * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === cur));
+  }
+
+  dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+
+  let timer = setInterval(() => goTo(cur + 1), 6000);
+  const banner = track.closest('.promo-banner');
+  if (banner) {
+    banner.addEventListener('mouseenter', () => clearInterval(timer));
+    banner.addEventListener('mouseleave', () => { timer = setInterval(() => goTo(cur + 1), 6000); });
+  }
+
+  let tx = 0;
+  track.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 48) goTo(cur + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+}
+
+/* ── Carousel Arrows ──────────────────────────────────────── */
 function initCarouselArrows() {
-  const track = document.getElementById('productCarousel');
-  if (!track) return;
-  document.getElementById('carouselPrev')?.addEventListener('click', () =>
-    track.scrollBy({ left: -216, behavior: 'smooth' }));
-  document.getElementById('carouselNext')?.addEventListener('click', () =>
-    track.scrollBy({ left: 216, behavior: 'smooth' }));
+  const pairs = [
+    { prev: 'carouselPrev',         next: 'carouselNext',         track: 'productCarousel' },
+    { prev: 'carouselPrevTerlaris', next: 'carouselNextTerlaris', track: 'carouselTerlaris' },
+    { prev: 'carouselPrevUnggulan', next: 'carouselNextUnggulan', track: 'carouselUnggulan' },
+  ];
+  pairs.forEach(({ prev, next, track }) => {
+    const t = document.getElementById(track);
+    if (!t) return;
+    document.getElementById(prev)?.addEventListener('click', () => t.scrollBy({ left: -216, behavior: 'smooth' }));
+    document.getElementById(next)?.addEventListener('click', () => t.scrollBy({ left: 216, behavior: 'smooth' }));
+  });
+}
+
+/* ── Filter Dropdown ──────────────────────────────────────── */
+function initFilterDropdown() {
+  const btn      = document.getElementById('filterToggleBtn');
+  const dropdown = document.getElementById('filterDropdown');
+  if (!btn || !dropdown) return;
+
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const open = dropdown.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+
+  document.addEventListener('click', e => {
+    if (!dropdown.contains(e.target) && e.target !== btn) {
+      dropdown.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  dropdown.querySelectorAll('.filter-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const attr = chip.dataset.filterSort !== undefined ? 'data-filter-sort' : 'data-filter-cond';
+      dropdown.querySelectorAll(`[${attr}]`).forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+    });
+  });
+
+  document.getElementById('filterResetBtn')?.addEventListener('click', () => {
+    dropdown.querySelectorAll('[data-filter-sort]').forEach((c, i) => c.classList.toggle('active', i === 0));
+    dropdown.querySelectorAll('[data-filter-cond]').forEach((c, i) => c.classList.toggle('active', i === 0));
+    const min = document.getElementById('filterPriceMin');
+    const max = document.getElementById('filterPriceMax');
+    if (min) min.value = '';
+    if (max) max.value = '';
+  });
+
+  document.getElementById('filterApplyBtn')?.addEventListener('click', () => {
+    const sort = dropdown.querySelector('[data-filter-sort].active')?.dataset.filterSort || 'terbaru';
+    const cond = dropdown.querySelector('[data-filter-cond].active')?.dataset.filterCond || 'semua';
+    const min  = document.getElementById('filterPriceMin')?.value.replace(/\D/g, '') || '';
+    const max  = document.getElementById('filterPriceMax')?.value.replace(/\D/g, '') || '';
+
+    const params = new URLSearchParams();
+    if (sort && sort !== 'terbaru') params.set('sort', sort);
+    if (cond && cond !== 'semua')   params.set('condition', cond);
+    if (min) params.set('price_min', min);
+    if (max) params.set('price_max', max);
+
+    window.location.href = `product.html${params.toString() ? '?' + params.toString() : ''}`;
+  });
+
+  ['filterPriceMin', 'filterPriceMax'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', function () {
+      const raw = this.value.replace(/\D/g, '');
+      this.value = raw ? Number(raw).toLocaleString('id-ID') : '';
+    });
+  });
 }
 
 /* ── Stars helper ───────────────────────────────────────────── */
@@ -69,7 +167,7 @@ function starsHtml(avg, count) {
 }
 
 /* ── Build Card ─────────────────────────────────────────────── */
-function buildCard(product, imgUrl, ratingMap = {}) {
+function buildCard(product, imgUrl, ratingMap = {}, badgeType = '') {
   const img   = imgUrl || 'https://placehold.co/280x280/f5f5f5/1d1d1f?text=No+Image';
   const price = (typeof formatRupiah === 'function')
     ? formatRupiah(product.price)
@@ -79,6 +177,13 @@ function buildCard(product, imgUrl, ratingMap = {}) {
   const condMap = { baru: 'Baru', second: 'Second', baru_second: 'Baru/Second' };
   const condLabel = condMap[product.condition] || 'Baru';
 
+  let badgeExtra = '';
+  if (badgeType === 'terlaris') {
+    badgeExtra = `<span class="product-badge-img badge-terlaris" style="left:auto;right:8px;top:8px;">🔥 Terlaris</span>`;
+  } else if (badgeType === 'unggulan') {
+    badgeExtra = `<span class="product-badge-img badge-unggulan" style="left:auto;right:8px;top:8px;">⭐ Unggulan</span>`;
+  }
+
   return `
     <article class="product-card" role="listitem" tabindex="0"
       onclick="window.location.href='product-detail.html?id=${product.id}'"
@@ -87,6 +192,7 @@ function buildCard(product, imgUrl, ratingMap = {}) {
         <img src="${img}" alt="${name}" loading="lazy" width="200" height="160"
              onerror="this.src='https://placehold.co/280x280/f5f5f5/1d1d1f?text=No+Image'">
         <span class="product-badge-img">${condLabel}</span>
+        ${badgeExtra}
       </div>
       <div class="product-info-area">
         <div class="product-badge-lbl">${condLabel}</div>
@@ -99,11 +205,31 @@ function buildCard(product, imgUrl, ratingMap = {}) {
     </article>`;
 }
 
+/* ── Build Rating Map ───────────────────────────────────────── */
+function buildRatingMap(reviews) {
+  const map = {};
+  (reviews || []).forEach(r => {
+    if (!map[r.product_id]) map[r.product_id] = { sum: 0, count: 0, avg: 0 };
+    map[r.product_id].sum   += r.rating;
+    map[r.product_id].count += 1;
+  });
+  Object.keys(map).forEach(id => {
+    map[id].avg = map[id].sum / map[id].count;
+  });
+  return map;
+}
+
 /* ── Load Products ──────────────────────────────────────────── */
 async function loadProducts() {
-  const track = document.getElementById('productCarousel');
+  const track         = document.getElementById('productCarousel');
+  const trackTerlaris = document.getElementById('carouselTerlaris');
+  const trackUnggulan = document.getElementById('carouselUnggulan');
   if (!track) return;
-  track.innerHTML = Array(4).fill('<div class="card-skeleton"></div>').join('');
+
+  const skeleton = Array(4).fill('<div class="card-skeleton"></div>').join('');
+  track.innerHTML = skeleton;
+  if (trackTerlaris) trackTerlaris.innerHTML = skeleton;
+  if (trackUnggulan) trackUnggulan.innerHTML = skeleton;
 
   try {
     const { data: prods, error } = await supabaseClient
@@ -111,45 +237,83 @@ async function loadProducts() {
       .select('*, product_images(image_url, is_primary), categories(id, slug, name)')
       .eq('is_active', true)
       .order('created_at', { ascending: false })
-      .limit(12);
+      .limit(24);
 
     if (error) throw error;
+
+    const empty = '<div class="carousel-empty">Belum ada produk tersedia.</div>';
     if (!prods || !prods.length) {
-      track.innerHTML = '<div class="carousel-empty">Belum ada produk tersedia.</div>';
+      track.innerHTML = empty;
+      if (trackTerlaris) trackTerlaris.innerHTML = empty;
+      if (trackUnggulan) trackUnggulan.innerHTML = empty;
       return;
     }
 
-    // Ambil rating semua produk sekaligus
+    // Fetch semua review sekaligus
     const ids = prods.map(p => p.id);
     const { data: reviews } = await supabaseClient
       .from('reviews')
       .select('product_id, rating')
       .in('product_id', ids);
 
-    // Buat rating map: { product_id: { avg, count } }
-    const ratingMap = {};
-    (reviews || []).forEach(r => {
-      if (!ratingMap[r.product_id]) ratingMap[r.product_id] = { sum: 0, count: 0 };
-      ratingMap[r.product_id].sum += r.rating;
-      ratingMap[r.product_id].count += 1;
-    });
-    Object.keys(ratingMap).forEach(id => {
-      const d = ratingMap[id];
-      ratingMap[id].avg = d.sum / d.count;
-    });
+    const ratingMap = buildRatingMap(reviews);
 
     const getImg = p =>
       p.product_images?.find(i => i.is_primary)?.image_url ||
       p.product_images?.[0]?.image_url || '';
 
-    track.innerHTML = prods.map(p => buildCard(p, getImg(p), ratingMap)).join('');
+    // ── Terbaru
+    track.innerHTML = prods.slice(0, 12)
+      .map(p => buildCard(p, getImg(p), ratingMap))
+      .join('');
+
+    // ── Terlaris: wajib punya review (count > 0), diurutkan skor = count × avg
+    const prodsWithReview = prods.filter(p => {
+      const r = ratingMap[p.id];
+      return r && r.count > 0;
+    });
+
+    if (trackTerlaris) {
+      if (prodsWithReview.length === 0) {
+        trackTerlaris.innerHTML = '<div class="carousel-empty">Belum ada produk dengan ulasan.</div>';
+      } else {
+        const terlaris = [...prodsWithReview]
+          .sort((a, b) => {
+            const ra = ratingMap[a.id];
+            const rb = ratingMap[b.id];
+            return (rb.count * rb.avg) - (ra.count * ra.avg);
+          })
+          .slice(0, 12);
+        trackTerlaris.innerHTML = terlaris
+          .map(p => buildCard(p, getImg(p), ratingMap, 'terlaris'))
+          .join('');
+      }
+    }
+
+    // ── Unggulan: wajib punya review, diurutkan avg tertinggi
+    if (trackUnggulan) {
+      if (prodsWithReview.length === 0) {
+        trackUnggulan.innerHTML = '<div class="carousel-empty">Belum ada produk dengan ulasan.</div>';
+      } else {
+        const unggulan = [...prodsWithReview]
+          .sort((a, b) => (ratingMap[b.id].avg) - (ratingMap[a.id].avg))
+          .slice(0, 12);
+        trackUnggulan.innerHTML = unggulan
+          .map(p => buildCard(p, getImg(p), ratingMap, 'unggulan'))
+          .join('');
+      }
+    }
 
   } catch (err) {
     console.error('loadProducts error:', err);
-    track.innerHTML = '<div class="carousel-empty">Gagal memuat produk.</div>';
+    const errMsg = '<div class="carousel-empty">Gagal memuat produk.</div>';
+    track.innerHTML = errMsg;
+    if (trackTerlaris) trackTerlaris.innerHTML = errMsg;
+    if (trackUnggulan) trackUnggulan.innerHTML = errMsg;
   }
 }
 
+/* ── Search ─────────────────────────────────────────────────── */
 function initSearch() {
   const input = document.getElementById('searchInput');
   if (!input) return;
@@ -170,7 +334,9 @@ function initSearch() {
 document.addEventListener('DOMContentLoaded', () => {
   setFooterYear();
   initHeroSlider();
+  initPromoSlider();
   initCarouselArrows();
+  initFilterDropdown();
   initSearch();
   loadProducts();
 });

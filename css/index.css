@@ -114,13 +114,91 @@ ul { list-style: none; }
   transform: translateY(-50%);
   color: var(--g400); pointer-events: none;
 }
+
 .search-filter-btn {
-  position: absolute; right: 10px; top: 50%;
+  position: absolute;
+  right: 10px;
+  top: 50%;
   transform: translateY(-50%);
-  color: var(--g400); padding: 3px;
-  border-radius: 4px; transition: var(--ease);
+  color: var(--g400);
+  padding: 3px;
+  border-radius: 4px;
+  transition: var(--ease);
+  display: flex;
+  align-items: center;
 }
 .search-filter-btn:hover { color: var(--ink); }
+
+/* ── Filter Dropdown ── */
+.filter-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 260px;
+  background: var(--white);
+  border: 1px solid var(--g200);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-lg);
+  padding: 16px;
+  z-index: 200;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.filter-dropdown.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.filter-section { margin-bottom: 14px; }
+.filter-section:last-child { margin-bottom: 0; }
+.filter-section-title {
+  font-size: 10px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.7px;
+  color: var(--g500); margin-bottom: 8px;
+}
+.filter-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.filter-chip {
+  padding: 5px 11px;
+  border: 1px solid var(--g200);
+  border-radius: var(--r-full);
+  font-size: 12px; font-weight: 600;
+  color: var(--g600); background: var(--g50);
+  cursor: pointer; transition: var(--ease);
+}
+.filter-chip:hover { border-color: var(--ink); color: var(--ink); background: var(--white); }
+.filter-chip.active { background: var(--ink); color: var(--white); border-color: var(--ink); }
+
+.filter-price-row { display: flex; align-items: center; gap: 8px; }
+.filter-price-input {
+  flex: 1; height: 32px;
+  border: 1px solid var(--g200);
+  border-radius: var(--r-sm);
+  padding: 0 8px; font-size: 12px;
+  color: var(--ink); outline: none;
+  font-family: inherit; background: var(--g50);
+  transition: var(--ease);
+}
+.filter-price-input:focus { border-color: var(--ink); background: var(--white); }
+.filter-price-sep { font-size: 12px; color: var(--g400); flex-shrink: 0; }
+
+.filter-actions { display: flex; gap: 8px; margin-top: 14px; }
+.filter-reset-btn {
+  flex: 1; height: 32px;
+  border: 1px solid var(--g200);
+  border-radius: var(--r-full);
+  font-size: 12px; font-weight: 600; color: var(--g600);
+  background: var(--g50); transition: var(--ease);
+}
+.filter-reset-btn:hover { border-color: var(--ink); color: var(--ink); }
+.filter-apply-btn {
+  flex: 1; height: 32px;
+  border-radius: var(--r-full);
+  font-size: 12px; font-weight: 700; color: var(--white);
+  background: var(--ink); transition: var(--ease);
+}
+.filter-apply-btn:hover { opacity: 0.85; }
 
 /* Header actions (cart) */
 .header-actions {
@@ -216,22 +294,32 @@ ul { list-style: none; }
 .hero-slide:first-child .hero-img { position: relative; }
 .hero-slide:not(:first-child) .hero-img { position: absolute; inset: 0; }
 
+/* ── Hero Dots — curved frosted pill ── */
 .hero-dots {
   position: absolute;
-  bottom: 16px; left: 50%;
+  bottom: 14px; left: 50%;
   transform: translateX(-50%);
-  display: flex; gap: 6px; z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 10;
+  background: rgba(240,240,240,0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: var(--r-full);
+  padding: 6px 10px;
+  border: 1px solid rgba(255,255,255,0.5);
 }
 .hero-dot {
-  width: 7px; height: 7px;
+  width: 6px; height: 6px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.55);
+  background: rgba(28,28,28,0.3);
   border: none; cursor: pointer;
   transition: var(--ease); padding: 0;
 }
 .hero-dot.active {
-  width: 22px; border-radius: 4px;
-  background: #fff;
+  width: 20px; border-radius: 3px;
+  background: var(--ink);
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -248,6 +336,23 @@ ul { list-style: none; }
   padding: 4px 2px 8px; flex: 1;
 }
 .carousel-track::-webkit-scrollbar { display: none; }
+
+/* ── Section Heading ── */
+.section-heading {
+  display: flex; align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding: 0 2px;
+}
+.section-heading h2 {
+  font-size: 16px; font-weight: 800;
+  color: var(--ink); letter-spacing: -0.2px;
+}
+.section-heading a {
+  font-size: 12px; font-weight: 600;
+  color: var(--g500); transition: var(--ease);
+}
+.section-heading a:hover { color: var(--ink); }
 
 .carousel-empty {
   flex: 1; padding: 40px 0;
@@ -304,6 +409,12 @@ ul { list-style: none; }
   text-transform: uppercase; letter-spacing: 0.3px;
   background: var(--ink-08); color: var(--ink);
 }
+.product-badge-img.badge-terlaris {
+  background: rgba(255,59,48,0.1); color: #c0392b;
+}
+.product-badge-img.badge-unggulan {
+  background: rgba(0,122,255,0.1); color: #0056cc;
+}
 
 .wishlist-btn {
   position: absolute; top: 8px; right: 8px;
@@ -348,8 +459,19 @@ ul { list-style: none; }
   100% { background-position: -200% 0; }
 }
 
+/* ── Product Rating on Card ─────────────────────────────────── */
+.product-rating {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
 /* ════════════════════════════════════════════════════════════════
-   PROMO BANNER
+   PROMO BANNER — ANIMATED SLIDER
 ════════════════════════════════════════════════════════════════ */
 .promo-section { padding: 0 0 32px; }
 .promo-section .content-wrap { padding: 0 var(--pad); }
@@ -361,11 +483,22 @@ ul { list-style: none; }
 .promo-banner::before {
   content: ''; position: absolute; inset: 0;
   background: radial-gradient(ellipse at 50% 60%, rgba(255,255,255,0.04) 0%, transparent 65%);
-  pointer-events: none;
+  pointer-events: none; z-index: 1;
 }
+
+.promo-slides-track {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+  position: relative; z-index: 2;
+}
+.promo-slide-item {
+  min-width: 100%;
+  flex-shrink: 0;
+}
+
 .promo-inner {
   display: flex; flex-direction: column; align-items: center;
-  padding: 40px 32px 32px; position: relative; z-index: 2; text-align: center;
+  padding: 40px 32px 52px; position: relative; text-align: center;
 }
 .promo-label {
   display: flex; align-items: center; gap: 8px;
@@ -394,15 +527,37 @@ ul { list-style: none; }
   padding: 10px 28px; border-radius: var(--r-full);
   font-size: 13px; font-weight: 700;
   border: 1.5px solid rgba(255,255,255,0.4); color: #fff;
-  transition: var(--ease); margin-bottom: 20px;
+  transition: var(--ease);
 }
 .promo-cta:hover { background: #fff; color: var(--ink); border-color: #fff; }
-.promo-dots { display: flex; align-items: center; justify-content: center; gap: 5px; }
-.promo-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: rgba(255,255,255,0.22); display: inline-block;
+
+/* Promo dots — absolute di bawah banner */
+.promo-dots {
+  position: absolute;
+  bottom: 16px; left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 10;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: var(--r-full);
+  padding: 6px 10px;
+  border: 1px solid rgba(255,255,255,0.18);
 }
-.promo-dot.active { width: 18px; border-radius: 3px; background: rgba(255,255,255,0.7); }
+.promo-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  border: none; cursor: pointer;
+  transition: var(--ease); padding: 0;
+}
+.promo-dot.active {
+  width: 20px; border-radius: 3px;
+  background: rgba(255,255,255,0.9);
+}
 
 /* ════════════════════════════════════════════════════════════════
    FOOTER
@@ -491,15 +646,4 @@ ul { list-style: none; }
   .footer-bottom { flex-direction: column; gap: 20px; }
   .footer-social { text-align: left; }
   .social-row { justify-content: flex-start; }
-}
-
-/* ── Product Rating on Card ─────────────────────────────────── */
-.product-rating {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  font-size: 11.5px;
-  font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 6px;
 }

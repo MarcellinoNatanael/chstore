@@ -100,6 +100,19 @@ async function getAdminRole(userId) {
   return null;
 }
 
+/* ── Catat riwayat login ke tabel login_history ─────────────── */
+async function recordLoginHistory(email, status) {
+  try {
+    await supabaseClient.from('login_history').insert({
+      email,
+      status,
+      user_agent: navigator.userAgent,
+    });
+  } catch (e) {
+    console.warn('Gagal catat login_history:', e);
+  }
+}
+
 /* ── Login ──────────────────────────────────────────────────── */
 async function doLogin() {
   hideError();
@@ -127,6 +140,7 @@ async function doLogin() {
     });
 
     if (signInError) {
+      await recordLoginHistory(email, 'failed'); // ← catat login gagal
       setLoading(false);
       showError('Email atau kata sandi salah.');
       return;
@@ -134,6 +148,7 @@ async function doLogin() {
 
     const userId = signInData?.user?.id;
     if (!userId) {
+      await recordLoginHistory(email, 'failed'); // ← catat login gagal
       setLoading(false);
       showError('Gagal mendapatkan data user. Coba lagi.');
       return;
@@ -145,6 +160,7 @@ async function doLogin() {
 
     if (role !== 'admin') {
       await supabaseClient.auth.signOut();
+      await recordLoginHistory(email, 'failed'); // ← catat login gagal (bukan admin)
       setLoading(false);
       showError(role
         ? 'Akun ini tidak memiliki akses admin.'
@@ -153,6 +169,7 @@ async function doLogin() {
     }
 
     // 3. Sukses
+    await recordLoginHistory(email, 'success'); // ← catat login berhasil
     setLoading(false);
     showToast('Berhasil masuk. Mengalihkan...', 'success');
     setTimeout(() => {
@@ -161,6 +178,7 @@ async function doLogin() {
 
   } catch (err) {
     console.error('Login error:', err);
+    await recordLoginHistory(email || '', 'failed');
     setLoading(false);
     showError('Terjadi kesalahan. Coba lagi.');
   }
