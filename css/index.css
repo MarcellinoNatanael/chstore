@@ -1,6 +1,6 @@
 /* ============================================================
-   CHStore — index.css
-   #1C1C1C only · max-width 900px centered · no accent color
+   CHStore — index.css  (Responsive: Mobile / Tablet / Desktop)
+   Breakpoints: 480px | 640px | 860px
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&display=swap');
@@ -77,6 +77,7 @@ ul { list-style: none; }
   display: flex;
   align-items: center;
   gap: 16px;
+  flex-wrap: wrap;   /* allows search to drop to second line on mobile */
 }
 
 /* Logo */
@@ -86,17 +87,18 @@ ul { list-style: none; }
   width: auto;
   object-fit: contain;
   min-width: 80px;
+  transition: height var(--ease);
 }
 
-/* ── Search bar — FIX: use display:flex instead of position+height ── */
+/* ── Search bar ── */
 .search-bar {
   flex: 1;
+  min-width: 180px;
   max-width: 460px;
   position: relative;
   display: flex;
   align-items: center;
   height: 36px;
-  /* NO overflow here — let children position freely */
 }
 
 .search-bar input {
@@ -257,7 +259,12 @@ ul { list-style: none; }
   align-items: center;
   justify-content: center;
   gap: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+.nav-inner::-webkit-scrollbar { display: none; }
+
 .nav-link {
   display: flex; align-items: center; gap: 4px;
   padding: 9px 13px;
@@ -278,6 +285,7 @@ ul { list-style: none; }
 .nav-divider {
   width: 1px; height: 16px;
   background: var(--g200); margin: 0 6px;
+  flex-shrink: 0;
 }
 .nav-lokasi { color: var(--ink) !important; font-weight: 600 !important; }
 .nav-lokasi:hover { background: var(--g50) !important; }
@@ -333,6 +341,13 @@ ul { list-style: none; }
   background: rgba(28,28,28,0.3);
   border: none; cursor: pointer;
   transition: var(--ease); padding: 0;
+  /* larger tap target on touch */
+  position: relative;
+}
+.hero-dot::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
 }
 .hero-dot.active {
   width: 20px; border-radius: 3px;
@@ -349,6 +364,8 @@ ul { list-style: none; }
   display: flex; gap: 12px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
   scrollbar-width: none; -ms-overflow-style: none;
   padding: 4px 2px 8px; flex: 1;
 }
@@ -570,6 +587,12 @@ ul { list-style: none; }
   background: rgba(255,255,255,0.35);
   border: none; cursor: pointer;
   transition: var(--ease); padding: 0;
+  position: relative;
+}
+.promo-dot::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
 }
 .promo-dot.active {
   width: 20px; border-radius: 3px;
@@ -650,17 +673,113 @@ ul { list-style: none; }
 .toast.error   { background: #c0392b; }
 
 /* ════════════════════════════════════════════════════════════════
-   RESPONSIVE
+   RESPONSIVE — TABLET  (≤ 860px)
 ════════════════════════════════════════════════════════════════ */
 @media (max-width: 860px) {
   :root { --pad: 24px; }
+
+  .logo-img { height: 80px; }
+
   .footer-grid { grid-template-columns: repeat(3, 1fr); }
+
+  /* filter dropdown aligns left to avoid viewport clip */
+  .filter-dropdown {
+    right: auto;
+    left: 0;
+  }
+
+  .carousel-arrow { width: 30px; height: 30px; }
+  .carousel-arrow-left  { left: -14px; }
+  .carousel-arrow-right { right: -14px; }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   RESPONSIVE — LARGE MOBILE (≤ 640px)
+════════════════════════════════════════════════════════════════ */
 @media (max-width: 640px) {
   :root { --pad: 16px; }
-  .nav-inner { justify-content: flex-start; overflow-x: auto; }
+
+  /* Nav */
+  .nav-inner { justify-content: flex-start; }
+
+  /* Promo */
+  .promo-inner { padding: 28px 20px 48px; }
+  .promo-label { font-size: 15px; }
+  .promo-headline { font-size: 18px; margin-bottom: 14px; }
+  .promo-desc { font-size: 11.5px; }
+  .promo-cta { padding: 9px 22px; font-size: 12px; }
+
+  /* Footer */
   .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .footer-bottom { flex-direction: column; gap: 20px; }
   .footer-social { text-align: left; }
   .social-row { justify-content: flex-start; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   RESPONSIVE — SMALL MOBILE (≤ 480px)
+════════════════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  :root { --pad: 12px; }
+
+  /* Header — stack logo/actions on top row, search below */
+  .header-inner {
+    padding: 10px var(--pad) 8px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .logo-img { height: 60px; min-width: 60px; }
+
+  /* Search takes full width on its own row */
+  .search-bar {
+    order: 3;
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  /* Push actions to far right on first row */
+  .header-actions { margin-left: auto; }
+
+  /* Hide label on wishlist to save space */
+  .cart-label { display: none; }
+
+  /* Hero */
+  .hero-section { padding: 12px 0 0; }
+  .hero-slider { border-radius: var(--r-lg); }
+  .hero-img { border-radius: var(--r-lg); }
+  .hero-dots { bottom: 10px; padding: 4px 8px; }
+
+  /* Carousel — hide arrows (use touch swipe) */
+  .carousel-arrow { display: none; }
+  .carousel-outer { margin: 0; }
+  .carousel-track {
+    padding: 4px 0 8px;
+    /* Allow track to extend edge-to-edge with peek */
+    margin: 0 calc(-1 * var(--pad));
+    padding-left: var(--pad);
+    padding-right: var(--pad);
+    scroll-padding-left: var(--pad);
+  }
+
+  /* Product cards narrower on small screens */
+  .product-card   { min-width: 160px; }
+  .card-skeleton  { min-width: 160px; }
+  .product-img-area { height: 130px; }
+
+  /* Promo */
+  .promo-inner { padding: 24px 16px 44px; }
+  .promo-headline { font-size: 16px; }
+  .promo-label { font-size: 13px; }
+  .promo-img-wrap { max-width: 90%; }
+
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  /* Toast */
+  #toastContainer { right: 12px; bottom: 12px; left: 12px; }
+  .toast { width: 100%; text-align: center; }
+
+  /* Section heading */
+  .section-heading h2 { font-size: 14px; }
 }
