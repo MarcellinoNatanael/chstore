@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title id="pageTitle">Tambah Produk — CHStore Admin</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin-layout.css">
+  <link rel="stylesheet" href="css/add-product.css">
+</head>
+<body>
+<div class="admin-layout">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <svg viewBox="0 0 14 17" width="18" height="18" fill="currentColor"><path d="M13.23 13.3c-.58.87-1.2 1.72-2.14 1.73-.94.02-1.24-.55-2.3-.55-1.07 0-1.4.54-2.29.57-.92.04-1.61-.92-2.2-1.77C2.97 11.9 2.06 8.71 3.29 6.57c.61-1.07 1.7-1.74 2.88-1.76.9-.01 1.75.61 2.3.61.55 0 1.58-.75 2.66-.64.45.02 1.73.18 2.55 1.39-.06.04-1.52.9-1.5 2.67.02 2.11 1.86 2.82 1.87 2.82-.02.05-.29 1.01-.97 1.98M9.1 2.45c.51-.58 1.36-1.02 2.06-1.05.09.82-.24 1.65-.73 2.23-.48.6-1.28 1.06-2.07.99-.1-.8.29-1.64.74-2.17z"/></svg>
+      <span class="sidebar-logo-text">CHStore</span>
+      <span class="sidebar-badge">ADMIN</span>
+    </div>
+    <div class="sidebar-admin-info">
+      <div class="sidebar-avatar" id="sidebarAvatar">A</div>
+      <div class="sidebar-admin-meta">
+        <div class="sidebar-admin-name" id="sidebarName">Admin</div>
+        <div class="sidebar-admin-role">Administrator</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Menu Utama</div>
+      <a href="index-admin.html" class="sidebar-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="product-admin.html" class="sidebar-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        <span>Inventori Produk</span>
+      </a>
+      <a href="add-product.html" class="sidebar-link active">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        <span>Tambah Produk</span>
+      </a>
+       <a href="settings-admin.html" class="sidebar-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span>Settings</span>
+      </a>
+      <div class="sidebar-divider"></div>
+      <button class="sidebar-link sidebar-logout" id="logoutBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <span>Keluar</span>
+      </button>
+    </nav>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="topbar-title">
+        <h1 id="topbarTitle">Tambah Produk</h1>
+        <p id="topbarSub">Isi detail produk</p>
+      </div>
+    </header>
+
+    <!-- Loading (mode edit) -->
+    <div class="admin-content" id="loadingState" style="display:none">
+      <div class="form-loading"><div class="admin-spinner"></div><span>Memuat data produk...</span></div>
+    </div>
+
+    <div class="admin-content" id="formContent">
+      <form id="productForm" autocomplete="off">
+        <div class="form-grid">
+
+          <!-- KIRI -->
+          <div class="form-col-main">
+
+            <!-- Info Produk -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h2 class="admin-card-title">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  Informasi Produk
+                </h2>
+              </div>
+              <div class="form-body">
+                <div class="form-group">
+                  <label class="form-label" for="productName">Nama Produk <span class="form-req">*</span></label>
+                  <input class="form-input" type="text" id="productName" placeholder="cth: iPhone 16 Pro Max 256GB" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="productDesc">Deskripsi Produk</label>
+                  <textarea class="form-input form-textarea" id="productDesc" rows="4" placeholder="Deskripsi lengkap produk..."></textarea>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="productPrice">Harga (Rp) <span class="form-req">*</span></label>
+                    <input class="form-input" type="number" id="productPrice" min="0" placeholder="0" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="productStock">Stok <span class="form-req">*</span></label>
+                    <input class="form-input" type="number" id="productStock" min="0" placeholder="0" required>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="productCategory">Kategori</label>
+                    <select class="form-input form-select" id="productCategory"><option value="">Pilih Kategori</option></select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="productWA">WhatsApp Toko</label>
+                    <input class="form-input" type="text" id="productWA" placeholder="cth: 08123456789">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Status Produk</label>
+                  <label class="toggle-wrap">
+                    <input type="checkbox" id="productActive" checked>
+                    <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                    <span class="toggle-hint" id="activeHint">Aktif — tampil di toko</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Foto -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h2 class="admin-card-title">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                  Foto Produk
+                </h2>
+                <span style="font-size:11.5px;color:var(--g400)">Foto pertama = utama</span>
+              </div>
+              <div class="form-body">
+                <!-- Foto existing (mode edit) -->
+                <div id="existingImagesSection" style="display:none">
+                  <div class="img-section-label">Foto Saat Ini</div>
+                  <div class="img-grid" id="existingImagesGrid"></div>
+                  <div style="margin-top:16px" class="img-section-label">Tambah Foto Baru</div>
+                </div>
+                <div class="img-dropzone" id="imageDropzone">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+                  <p class="img-dropzone-title">Drag & drop atau klik untuk upload</p>
+                  <p class="img-dropzone-sub">JPG, PNG, WEBP — maks 5MB per foto</p>
+                  <input type="file" id="imageInput" accept="image/*" multiple style="display:none">
+                </div>
+                <div class="img-grid" id="newImagesGrid" style="margin-top:12px"></div>
+              </div>
+            </div>
+
+            <!-- Spesifikasi -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h2 class="admin-card-title">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                  Spesifikasi
+                </h2>
+                <button type="button" class="btn-add-row" onclick="addSpec()">+ Tambah</button>
+              </div>
+              <div class="form-body">
+                <div id="specsContainer"><p class="form-hint">Belum ada spesifikasi.</p></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- KANAN -->
+          <div class="form-col-side">
+
+            <!-- Kondisi -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h2 class="admin-card-title">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                  Kondisi
+                </h2>
+              </div>
+              <div class="form-body">
+                <div class="condition-group">
+                  <label class="condition-opt"><input type="radio" name="condition" value="baru" checked><span>Baru</span></label>
+                  <label class="condition-opt"><input type="radio" name="condition" value="second"><span>Second</span></label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Danger Zone (edit mode only) -->
+            <div class="admin-card danger-card" id="dangerZone" style="display:none">
+              <div class="admin-card-header">
+                <h2 class="admin-card-title" style="color:#EF4444">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                 Hapus Produk?
+                </h2>
+              </div>
+              <div class="form-body">
+                <p class="form-hint" style="margin-bottom:12px">Menghapus produk bersifat permanen dan tidak dapat dibatalkan.</p>
+                <button type="button" class="btn-danger-full" id="deleteBtn">Hapus Produk Ini</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Save Bar -->
+        <div class="save-bar">
+          <span class="save-hint" id="saveHint">Semua field bertanda * wajib diisi</span>
+          <div style="display:flex;gap:10px">
+            <a href="product-admin.html" class="btn-save-cancel">Batal</a>
+            <button type="submit" class="btn-save" id="saveBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              <span id="saveBtnText">Simpan Produk</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
+
+<div id="toastContainer"></div>
+<div class="modal-overlay" id="confirmModal" style="display:none">
+  <div class="modal">
+    <h3 id="confirmTitle">Konfirmasi</h3>
+    <p id="confirmMessage"></p>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" id="cancelBtn">Batal</button>
+      <button class="btn-modal-confirm" id="confirmBtn">Ya, Hapus</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/add-product.js"></script>
+</body>
+</html>

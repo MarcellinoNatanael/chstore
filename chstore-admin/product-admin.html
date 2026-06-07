@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Inventori Produk — CHStore Admin</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin-layout.css">
+  <link rel="stylesheet" href="css/product-admin.css">
+</head>
+<body>
+<div class="admin-layout">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <svg viewBox="0 0 14 17" width="18" height="18" fill="currentColor"><path d="M13.23 13.3c-.58.87-1.2 1.72-2.14 1.73-.94.02-1.24-.55-2.3-.55-1.07 0-1.4.54-2.29.57-.92.04-1.61-.92-2.2-1.77C2.97 11.9 2.06 8.71 3.29 6.57c.61-1.07 1.7-1.74 2.88-1.76.9-.01 1.75.61 2.3.61.55 0 1.58-.75 2.66-.64.45.02 1.73.18 2.55 1.39-.06.04-1.52.9-1.5 2.67.02 2.11 1.86 2.82 1.87 2.82-.02.05-.29 1.01-.97 1.98M9.1 2.45c.51-.58 1.36-1.02 2.06-1.05.09.82-.24 1.65-.73 2.23-.48.6-1.28 1.06-2.07.99-.1-.8.29-1.64.74-2.17z"/></svg>
+      <span class="sidebar-logo-text">CHStore</span>
+      <span class="sidebar-badge">ADMIN</span>
+    </div>
+    <div class="sidebar-admin-info">
+      <div class="sidebar-avatar" id="sidebarAvatar">A</div>
+      <div class="sidebar-admin-meta">
+        <div class="sidebar-admin-name" id="sidebarName">Admin</div>
+        <div class="sidebar-admin-role">Administrator</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Menu Utama</div>
+      <a href="index-admin.html" class="sidebar-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="product-admin.html" class="sidebar-link active">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        <span>Inventori Produk</span>
+      </a>
+      <a href="add-product.html" class="sidebar-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        <span>Tambah Produk</span>
+      </a>
+       <a href="settings-admin.html" class="sidebar-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span>Settings</span>
+      </a>
+      <div class="sidebar-divider"></div>
+      <button class="sidebar-link sidebar-logout" id="logoutBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <span>Keluar</span>
+      </button>
+    </nav>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="topbar-title">
+        <h1>Inventori Produk</h1>
+        <p id="productCountLine">Memuat...</p>
+      </div>
+    </header>
+
+    <div class="admin-content">
+      <div class="admin-card" style="margin-bottom:0">
+
+        <!-- Filters -->
+        <div class="table-filters">
+          <div class="search-wrap">
+            <svg class="search-icon-inp" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input class="filter-input" type="search" id="searchInput" placeholder="Cari nama produk...">
+          </div>
+          <select class="filter-select" id="filterCategory"><option value="">Semua Kategori</option></select>
+          <select class="filter-select" id="filterStatus">
+            <option value="">Semua Status</option>
+            <option value="active">Aktif</option>
+            <option value="inactive">Nonaktif</option>
+          </select>
+          <select class="filter-select" id="filterStock">
+            <option value="">Semua Stok</option>
+            <option value="low">Stok Menipis (&lt;5)</option>
+            <option value="empty">Stok Habis</option>
+          </select>
+        </div>
+
+        <!-- Table -->
+        <div class="table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Produk</th>
+                <th>Kategori</th>
+                <th>Harga</th>
+                <th>Stok</th>
+                <th>Status</th>
+                <th style="text-align:right">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="productsTableBody">
+              <tr><td colspan="6" class="table-loading"><div class="admin-loading"><div class="admin-spinner"></div><span>Memuat produk...</span></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="table-pagination">
+          <div class="pagination-info" id="paginationInfo">—</div>
+          <div class="pagination-btns" id="paginationBtns"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="toastContainer"></div>
+<div class="modal-overlay" id="confirmModal" style="display:none">
+  <div class="modal">
+    <h3 id="confirmTitle">Konfirmasi</h3>
+    <p id="confirmMessage"></p>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" id="cancelBtn">Batal</button>
+      <button class="btn-modal-confirm" id="confirmBtn">Ya, Lanjutkan</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/product-admin.js"></script>
+</body>
+</html>

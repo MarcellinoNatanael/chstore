@@ -1,0 +1,65 @@
+/* ============================================================
+   CHStore — register-admin.css
+   Extend login-admin.css untuk kebutuhan form register
+   ============================================================ */
+
+/* Card lebih tinggi — ada lebih banyak field */
+.auth-wrap { max-width: 440px; }
+
+/* Alert success */
+.auth-alert-success {
+  background: #F0FDF4;
+  border-color: #BBF7D0;
+  color: #166534;
+}
+.auth-alert-success.show { display: flex; }
+
+/* Required asterisk */
+.form-required {
+  color: #C0392B;
+  margin-left: 2px;
+}
+
+/* Inline text + link di baris yang sama */
+.auth-link-muted-text {
+  font-size: 13px;
+  color: var(--g600);
+}
+
+/* Password strength meter */
+.password-strength {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.strength-bar {
+  flex: 1;
+  height: 4px;
+  background: var(--g200);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.strength-fill {
+  height: 100%;
+  border-radius: 2px;
+  width: 0%;
+  transition: width 0.3s ease, background 0.3s ease;
+}
+.strength-label {
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  min-width: 56px;
+  text-align: right;
+}
+
+/* Strength levels */
+.strength-weak   { background: #EF4444; }
+.strength-fair   { background: #F97316; }
+.strength-good   { background: #EAB308; }
+.strength-strong { background: #22C55E; }
+
+@media (max-width: 480px) {
+  .auth-card { padding: 28px 18px 22px; }
+}

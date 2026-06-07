@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Admin Login — CHStore Dashboard</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/login-admin.css">
+</head>
+<body>
+
+  <div class="auth-wrap">
+    <div class="auth-card">
+
+      <!-- Brand -->
+      <div class="auth-brand">
+        <div class="auth-brand-logo">
+          <svg viewBox="0 0 14 17" width="22" height="22" fill="currentColor">
+            <path d="M13.23 13.3c-.58.87-1.2 1.72-2.14 1.73-.94.02-1.24-.55-2.3-.55-1.07 0-1.4.54-2.29.57-.92.04-1.61-.92-2.2-1.77C2.97 11.9 2.06 8.71 3.29 6.57c.61-1.07 1.7-1.74 2.88-1.76.9-.01 1.75.61 2.3.61.55 0 1.58-.75 2.66-.64.45.02 1.73.18 2.55 1.39-.06.04-1.52.9-1.5 2.67.02 2.11 1.86 2.82 1.87 2.82-.02.05-.29 1.01-.97 1.98M9.1 2.45c.51-.58 1.36-1.02 2.06-1.05.09.82-.24 1.65-.73 2.23-.48.6-1.28 1.06-2.07.99-.1-.8.29-1.64.74-2.17z"/>
+          </svg>
+          <span class="auth-brand-name">CHStore</span>
+          <span class="auth-brand-badge">ADMIN</span>
+        </div>
+        <p class="auth-brand-sub">Seller Dashboard</p>
+      </div>
+
+      <!-- Heading -->
+      <h1 class="auth-title">Masuk sebagai Admin</h1>
+      <p class="auth-desc">Akses terbatas untuk pengelola toko</p>
+
+      <!-- Error -->
+      <div class="auth-alert" id="alertError" role="alert" aria-live="polite"></div>
+
+      <!-- Form -->
+      <div class="form-group">
+        <label class="form-label" for="email">Email Admin</label>
+        <input class="form-input" type="email" id="email"
+          placeholder="admin@chstore.id" autocomplete="email" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="password">Kata Sandi</label>
+        <div class="input-wrap">
+          <input class="form-input" type="password" id="password"
+            placeholder="Kata sandi admin" autocomplete="current-password" required>
+          <button class="toggle-pass" id="togglePass" type="button" aria-label="Tampilkan kata sandi">
+            <!-- eye icon -->
+            <svg id="eyeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button class="btn-login" id="loginBtn" type="button">
+        <span id="loginBtnText">Masuk</span>
+      </button>
+
+      <!-- Links -->
+      <div class="auth-links">
+        <a href="register-admin.html" class="auth-link-primary">Daftar akun admin baru</a>
+        <a href="https://marcellinonatanael.github.io/chstore" class="auth-link-muted">Kembali ke toko</a>
+      </div>
+
+      <!-- Security note -->
+      <div class="auth-note">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        Halaman ini hanya untuk admin yang berwenang
+      </div>
+
+    </div>
+  </div>
+
+  <div id="toastContainer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/login-admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+/* ============================================================
+   CHStore — settings-admin.css
+   ============================================================ */
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+.settings-col { display: flex; flex-direction: column; gap: 20px; }
+
+/* ── Settings Body ──────────────────────────────────────────── */
+.settings-body { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+
+.settings-label {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 12px; font-weight: 700; color: var(--ink);
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.settings-input {
+  height: 38px; padding: 0 12px;
+  border: 1px solid var(--g200); border-radius: var(--r-md);
+  background: var(--white); font-size: 13.5px;
+  font-family: inherit; color: var(--ink);
+  outline: none; transition: var(--ease); width: 100%;
+}
+.settings-input:focus { border-color: var(--ink); box-shadow: 0 0 0 3px var(--ink-08); }
+.settings-input[readonly] { background: var(--g50); color: var(--g500); cursor: not-allowed; }
+.settings-textarea { height: auto; padding: 10px 12px; resize: vertical; }
+
+.settings-btn-primary {
+  height: 38px; padding: 0 18px;
+  background: var(--ink); color: var(--white);
+  border-radius: var(--r-md); font-size: 13px;
+  font-weight: 700; font-family: inherit;
+  border: none; cursor: pointer; transition: var(--ease);
+  align-self: flex-start;
+}
+.settings-btn-primary:hover { opacity: 0.85; }
+.settings-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.settings-btn-secondary {
+  height: 38px; padding: 0 16px;
+  background: var(--white); color: var(--ink);
+  border: 1.5px solid var(--ink); border-radius: var(--r-md);
+  font-size: 13px; font-weight: 700; font-family: inherit;
+  cursor: pointer; transition: var(--ease);
+  display: inline-flex; align-items: center; gap: 7px;
+}
+.settings-btn-secondary:hover { background: var(--ink); color: var(--white); }
+
+.settings-btn-text {
+  font-size: 12px; font-weight: 600; color: var(--g500);
+  background: none; border: none; cursor: pointer;
+  transition: var(--ease); white-space: nowrap; padding: 0 4px;
+}
+.settings-btn-text:hover { color: var(--ink); }
+
+.settings-hint {
+  font-size: 12.5px; color: var(--g500); line-height: 1.6;
+}
+.settings-hint-sm { font-size: 11px; color: var(--g400); margin-top: 3px; }
+.settings-live-badge {
+  font-size: 11px; font-weight: 600; color: #166534;
+  background: #EDFBF1; padding: 3px 9px; border-radius: 99px;
+}
+.settings-hint-badge {
+  font-size: 11px; font-weight: 600; color: #9A3412;
+  background: #FFF7ED; padding: 3px 9px; border-radius: 99px;
+}
+
+/* ── Profile Avatar ─────────────────────────────────────────── */
+.profile-avatar-row {
+  display: flex; align-items: center; gap: 14px;
+  padding-bottom: 14px; border-bottom: 1px solid var(--g100); margin-bottom: 2px;
+}
+.profile-avatar-lg {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--ink); color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 800; flex-shrink: 0;
+}
+.profile-name-lg { font-size: 15px; font-weight: 800; color: var(--ink); }
+.profile-role-lg { font-size: 12px; color: var(--g500); margin-top: 2px; }
+
+/* ── Password Toggle ────────────────────────────────────────── */
+.pw-input-wrap { position: relative; }
+.pw-input-wrap .settings-input { padding-right: 40px; }
+.pw-toggle {
+  position: absolute; right: 10px; top: 50%;
+  transform: translateY(-50%); color: var(--g400);
+  background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; transition: var(--ease);
+}
+.pw-toggle:hover { color: var(--ink); }
+
+/* ── OTP ────────────────────────────────────────────────────── */
+.otp-sent-info {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12.5px; color: var(--g600);
+  background: var(--g50); border: 1px solid var(--g200);
+  border-radius: var(--r-sm); padding: 8px 12px; margin-bottom: 12px;
+}
+.otp-input-row { display: flex; gap: 8px; align-items: center; }
+.otp-verified-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 12px; font-weight: 700; color: #166534;
+  background: #EDFBF1; padding: 5px 12px; border-radius: 99px;
+}
+
+/* ── Login History ──────────────────────────────────────────── */
+.login-history-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 20px; border-bottom: 1px solid var(--g100);
+  transition: var(--ease);
+}
+.login-history-item:last-child { border-bottom: none; }
+.login-history-item:hover { background: var(--g50); }
+
+.login-history-icon {
+  width: 36px; height: 36px; border-radius: var(--r-md);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.login-icon-ok      { background: #EDFBF1; color: #166534; }
+.login-icon-warn    { background: #FFF7ED; color: #C2410C; }
+.login-icon-danger  { background: #FEF2F2; color: #991B1B; }
+
+.login-history-info { flex: 1; min-width: 0; }
+.login-history-user { font-size: 13px; font-weight: 700; color: var(--ink); }
+.login-history-meta {
+  display: flex; align-items: center; gap: 8px; margin-top: 2px; flex-wrap: wrap;
+}
+.login-history-time { font-size: 11.5px; color: var(--g500); }
+.login-history-ip   { font-size: 11px; font-weight: 600; color: var(--g400); background: var(--g100); padding: 1px 7px; border-radius: 99px; }
+.login-history-device { font-size: 11px; color: var(--g400); }
+
+.login-status-badge {
+  font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 99px; white-space: nowrap; flex-shrink: 0;
+}
+.login-status-success { background: #EDFBF1; color: #166534; }
+.login-status-failed  { background: #FEF2F2; color: #991B1B; }
+
+.login-empty {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 32px 20px; color: var(--g400); gap: 8px; text-align: center;
+  font-size: 13px;
+}
+.login-empty svg { opacity: 0.25; }
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .settings-grid { grid-template-columns: 1fr; }
+}

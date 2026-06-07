@@ -1,0 +1,273 @@
+/* ============================================================
+   CHStore — login-admin.css
+   Halaman login admin, standalone (tidak extend index.css)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&display=swap');
+
+/* ── Reset ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #F5F5F5;
+  color: #1C1C1C;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; font-family: inherit; border: none; background: none; }
+input { font-family: inherit; }
+
+/* ── Variables ──────────────────────────────────────────────── */
+:root {
+  --ink:    #1C1C1C;
+  --ink-08: rgba(28,28,28,0.08);
+  --white:  #FFFFFF;
+  --g50:    #F9F9F9;
+  --g100:   #F5F5F5;
+  --g200:   #E8E8E8;
+  --g300:   #D1D1D1;
+  --g400:   #AEAEB2;
+  --g500:   #8E8E93;
+  --g600:   #636366;
+  --red:    #C0392B;
+
+  --r-sm:   8px;
+  --r-md:   12px;
+  --r-lg:   16px;
+  --r-full: 9999px;
+  --ease:   0.18s cubic-bezier(0.25,0.46,0.45,0.94);
+  --sh-md:  0 4px 24px rgba(0,0,0,0.09);
+}
+
+/* ── Auth Wrapper ───────────────────────────────────────────── */
+.auth-wrap {
+  width: 100%;
+  max-width: 420px;
+}
+
+/* ── Card ───────────────────────────────────────────────────── */
+.auth-card {
+  background: var(--white);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--g200);
+  box-shadow: var(--sh-md);
+  padding: 40px 36px 32px;
+}
+
+/* ── Brand ──────────────────────────────────────────────────── */
+.auth-brand {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.auth-brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+.auth-brand-name {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.4px;
+}
+.auth-brand-badge {
+  background: var(--ink);
+  color: var(--white);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+.auth-brand-sub {
+  font-size: 12.5px;
+  color: var(--g500);
+}
+
+/* ── Heading ────────────────────────────────────────────────── */
+.auth-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.3px;
+  margin-bottom: 4px;
+}
+.auth-desc {
+  font-size: 13px;
+  color: var(--g500);
+  margin-bottom: 24px;
+}
+
+/* ── Alert ──────────────────────────────────────────────────── */
+.auth-alert {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-radius: var(--r-md);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--red);
+  margin-bottom: 16px;
+}
+.auth-alert.show { display: flex; }
+
+/* ── Form ───────────────────────────────────────────────────── */
+.form-group {
+  margin-bottom: 16px;
+}
+.form-label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 6px;
+  letter-spacing: 0.1px;
+}
+.form-input {
+  width: 100%;
+  height: 40px;
+  border: 1px solid var(--g200);
+  border-radius: var(--r-md);
+  background: var(--g50);
+  padding: 0 14px;
+  font-size: 13.5px;
+  color: var(--ink);
+  outline: none;
+  transition: var(--ease);
+}
+.form-input::placeholder { color: var(--g400); }
+.form-input:focus {
+  border-color: var(--ink);
+  background: var(--white);
+  box-shadow: 0 0 0 3px var(--ink-08);
+}
+.form-input.error { border-color: var(--red); }
+
+/* Password wrapper */
+.input-wrap { position: relative; }
+.input-wrap .form-input { padding-right: 42px; }
+.toggle-pass {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--g400);
+  padding: 4px;
+  border-radius: 4px;
+  transition: var(--ease);
+  display: flex;
+  align-items: center;
+}
+.toggle-pass:hover { color: var(--ink); }
+
+/* ── Submit Button ──────────────────────────────────────────── */
+.btn-login {
+  width: 100%;
+  height: 44px;
+  border-radius: var(--r-md);
+  background: var(--ink);
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: var(--ease);
+  margin-top: 8px;
+  margin-bottom: 20px;
+  border: 1.5px solid var(--ink);
+}
+.btn-login:hover {
+  background: var(--white);
+  color: var(--ink);
+}
+.btn-login:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--ink);
+  color: var(--white);
+}
+
+/* Spinner */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { animation: spin 0.8s linear infinite; display: inline-block; }
+
+/* ── Links ──────────────────────────────────────────────────── */
+.auth-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.auth-link-primary {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  transition: var(--ease);
+}
+.auth-link-primary:hover { color: var(--g500); }
+.auth-link-muted {
+  font-size: 12.5px;
+  color: var(--g500);
+  transition: var(--ease);
+}
+.auth-link-muted:hover { color: var(--ink); }
+
+/* ── Security Note ──────────────────────────────────────────── */
+.auth-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: var(--g100);
+  border-radius: var(--r-md);
+  font-size: 12px;
+  color: var(--g500);
+}
+
+/* ── Toast ──────────────────────────────────────────────────── */
+#toastContainer {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+.toast {
+  background: var(--ink);
+  color: var(--white);
+  padding: 10px 16px;
+  border-radius: var(--r-md);
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  transform: translateY(56px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  pointer-events: auto;
+}
+.toast.show    { transform: translateY(0); opacity: 1; }
+.toast.error   { background: #C0392B; }
+.toast.success { background: #1D7A3D; }
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .auth-card { padding: 32px 20px 24px; }
+}
