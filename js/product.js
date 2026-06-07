@@ -81,10 +81,7 @@ async function toggleWishlistProduct(productId, btn) {
 
   try {
     if (inWish) {
-      await supabaseClient
-        .from('wishlists')
-        .delete()
-        .eq('product_id', productId);
+      await supabaseClient.from('wishlists').delete().eq('product_id', productId);
       wishlistedIds.delete(sid);
       btn.classList.remove('active');
       svg.setAttribute('fill', 'none');
@@ -92,9 +89,7 @@ async function toggleWishlistProduct(productId, btn) {
       btn.setAttribute('aria-label', 'Tambah ke wishlist');
       showToast('Dihapus dari wishlist');
     } else {
-      await supabaseClient
-        .from('wishlists')
-        .insert({ product_id: productId });
+      await supabaseClient.from('wishlists').insert({ product_id: productId });
       wishlistedIds.add(sid);
       btn.classList.add('active');
       svg.setAttribute('fill', '#FF3B30');
@@ -156,13 +151,20 @@ async function loadProducts(cat) {
   grid.innerHTML = Array(6).fill('<div class="prod-skeleton"></div>').join('');
   empty.style.display = 'none';
 
+  // Baca filter dari URL
+  const params   = new URLSearchParams(location.search);
+  const sortParam = params.get('sort') || 'terbaru';
+  const condParam = params.get('condition') || 'semua';
+  const minParam  = parseInt(params.get('price_min')) || 0;
+  const maxParam  = parseInt(params.get('price_max')) || 0;
+
   try {
     let query = supabaseClient
       .from('products')
       .select('*, product_images(image_url, is_primary), categories(id, slug, name)')
-      .eq('is_active', true)
-      .order('created_at', { ascending: false });
+      .eq('is_active', true);
 
+    // Filter kategori
     if (cat) {
       const { data: catData } = await supabaseClient
         .from('categories').select('id').eq('slug', cat).single();
@@ -174,6 +176,25 @@ async function loadProducts(cat) {
       query = query.eq('category_id', catData.id);
     }
 
+    // Filter kondisi
+    if (condParam && condParam !== 'semua') {
+      query = query.eq('condition', condParam);
+    }
+
+    // Filter harga
+    if (minParam > 0) query = query.gte('price', minParam);
+    if (maxParam > 0) query = query.lte('price', maxParam);
+
+    // Sort
+    if (sortParam === 'termurah') {
+      query = query.order('price', { ascending: true });
+    } else if (sortParam === 'termahal') {
+      query = query.order('price', { ascending: false });
+    } else {
+      // terbaru & terlaris: ambil semua dulu, sort di client
+      query = query.order('created_at', { ascending: false });
+    }
+
     const { data: prods, error } = await query;
     if (error) throw error;
 
@@ -183,7 +204,7 @@ async function loadProducts(cat) {
       return;
     }
 
-    // Rating
+    // Rating map
     const ids = prods.map(p => p.id);
     const { data: reviews } = await supabaseClient
       .from('reviews').select('product_id, rating').in('product_id', ids);
@@ -198,13 +219,104 @@ async function loadProducts(cat) {
       ratingMap[id].avg = ratingMap[id].sum / ratingMap[id].count;
     });
 
-    grid.innerHTML = prods.map(p => buildCard(p, getImg(p), ratingMap)).join('');
+    // Sort terlaris di client (berdasarkan count × avg)
+    let sorted = [...prods];
+    if (sortParam === 'terlaris') {
+      sorted.sort((a, b) => {
+        const ra = ratingMap[a.id] || { count: 0, avg: 0 };
+        const rb = ratingMap[b.id] || { count: 0, avg: 0 };
+        return (rb.count * rb.avg) - (ra.count * ra.avg);
+      });
+    }
+
+    grid.innerHTML = sorted.map(p => buildCard(p, getImg(p), ratingMap)).join('');
 
   } catch (err) {
     console.error('loadProducts error:', err);
     grid.innerHTML = '';
     empty.style.display = 'block';
   }
+}
+
+/* ── Filter Dropdown ──────────────────────────────────────── */
+function initFilterDropdown() {
+  const btn      = document.getElementById('filterToggleBtn');
+  const dropdown = document.getElementById('filterDropdown');
+  if (!btn || !dropdown) return;
+
+  // Sync state chip dari URL params
+  const params    = new URLSearchParams(location.search);
+  const sortParam = params.get('sort') || 'terbaru';
+  const condParam = params.get('condition') || 'semua';
+  const minParam  = params.get('price_min') || '';
+  const maxParam  = params.get('price_max') || '';
+
+  dropdown.querySelectorAll('[data-filter-sort]').forEach(c => {
+    c.classList.toggle('active', c.dataset.filterSort === sortParam);
+  });
+  dropdown.querySelectorAll('[data-filter-cond]').forEach(c => {
+    c.classList.toggle('active', c.dataset.filterCond === condParam);
+  });
+  const minEl = document.getElementById('filterPriceMin');
+  const maxEl = document.getElementById('filterPriceMax');
+  if (minEl && minParam) minEl.value = Number(minParam).toLocaleString('id-ID');
+  if (maxEl && maxParam) maxEl.value = Number(maxParam).toLocaleString('id-ID');
+
+  // Toggle open/close
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const open = dropdown.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+
+  document.addEventListener('click', e => {
+    if (!dropdown.contains(e.target) && e.target !== btn) {
+      dropdown.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Chip select
+  dropdown.querySelectorAll('.filter-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const attr = chip.dataset.filterSort !== undefined ? 'data-filter-sort' : 'data-filter-cond';
+      dropdown.querySelectorAll(`[${attr}]`).forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+    });
+  });
+
+  // Reset
+  document.getElementById('filterResetBtn')?.addEventListener('click', () => {
+    dropdown.querySelectorAll('[data-filter-sort]').forEach((c, i) => c.classList.toggle('active', i === 0));
+    dropdown.querySelectorAll('[data-filter-cond]').forEach((c, i) => c.classList.toggle('active', i === 0));
+    if (minEl) minEl.value = '';
+    if (maxEl) maxEl.value = '';
+  });
+
+  // Apply — pertahankan category param
+  document.getElementById('filterApplyBtn')?.addEventListener('click', () => {
+    const sort = dropdown.querySelector('[data-filter-sort].active')?.dataset.filterSort || 'terbaru';
+    const cond = dropdown.querySelector('[data-filter-cond].active')?.dataset.filterCond || 'semua';
+    const min  = minEl?.value.replace(/\D/g, '') || '';
+    const max  = maxEl?.value.replace(/\D/g, '') || '';
+
+    const p = new URLSearchParams();
+    if (activeCat)          p.set('category', activeCat);
+    if (sort !== 'terbaru') p.set('sort', sort);
+    if (cond !== 'semua')   p.set('condition', cond);
+    if (min)                p.set('price_min', min);
+    if (max)                p.set('price_max', max);
+
+    window.location.href = `product.html${p.toString() ? '?' + p.toString() : ''}`;
+  });
+
+  // Format harga input
+  ['filterPriceMin', 'filterPriceMax'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', function () {
+      const raw = this.value.replace(/\D/g, '');
+      this.value = raw ? Number(raw).toLocaleString('id-ID') : '';
+    });
+  });
 }
 
 /* ── Meta ───────────────────────────────────────────────────── */
@@ -247,6 +359,7 @@ const activeCat = urlParams.get('category') || '';
 document.addEventListener('DOMContentLoaded', async () => {
   setFooterYear();
   initSearch();
+  initFilterDropdown();
   setNavActive(activeCat);
   updateCartBadge();
   await loadWishlistedIds();
