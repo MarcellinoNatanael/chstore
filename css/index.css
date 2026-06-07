@@ -647,3 +647,7 @@ ul { list-style: none; }
   .footer-social { text-align: left; }
   .social-row { justify-content: flex-start; }
 }
+
+.search-filter-wrap {
+  position: relative;
+}
