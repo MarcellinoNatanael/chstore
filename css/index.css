@@ -833,20 +833,17 @@ ul { list-style: none; }
   border-radius: var(--r-xl);
   overflow: hidden;
   position: relative;
-  height: 380px;
   background: #1d1d1f;
   -webkit-mask-image: radial-gradient(white, black);
   mask-image: radial-gradient(white, black);
 }
 
-/* Track = full size container */
 .promo-slides-track {
   position: relative;
   width: 100%;
-  height: 100%;
 }
 
-/* Tiap slide absolute full cover, fade in/out */
+/* Slide pertama pakai position relative untuk tentukan tinggi */
 .promo-slide-item {
   position: absolute;
   inset: 0;
@@ -855,21 +852,37 @@ ul { list-style: none; }
   -o-transition: opacity 0.55s ease;
   transition: opacity 0.55s ease;
   pointer-events: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+.promo-slide-item:first-child {
+  position: relative;
 }
 .promo-slide-item.active {
   opacity: 1;
   pointer-events: auto;
 }
+.promo-slide-item:first-child:not(.active) {
+  opacity: 0;
+  pointer-events: none;
+}
 
-/* Gambar = background full cover */
+/* Gambar di bagian ATAS */
 .promo-img-wrap {
-  position: absolute;
-  inset: 0;
-  margin: 0;
-  max-width: none;
-  border-radius: 0;
+  position: relative;
+  width: 100%;
+  height: 220px;
   overflow: hidden;
-  z-index: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
 }
 .promo-img {
   position: absolute;
@@ -886,22 +899,10 @@ ul { list-style: none; }
   will-change: auto;
 }
 
-/* Gradient overlay supaya teks terbaca */
-.promo-slide-item::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: -webkit-linear-gradient(top, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.30) 50%, rgba(0,0,0,0.75) 100%);
-  background: linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.30) 50%, rgba(0,0,0,0.75) 100%);
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Teks overlay di atas gambar */
+/* Teks di bagian BAWAH — solid dark */
 .promo-inner {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
+  background: #1d1d1f;
+  padding: 14px 20px 18px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -911,16 +912,14 @@ ul { list-style: none; }
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
   -webkit-box-align: start;
   -webkit-align-items: flex-start;
   -ms-flex-align: start;
   align-items: flex-start;
-  padding: 0 28px 44px;
-  text-align: left;
+  gap: 4px;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
 }
 
 .promo-label {
@@ -934,8 +933,8 @@ ul { list-style: none; }
   align-items: center;
   gap: 6px;
   font-size: 13px; font-weight: 700;
-  color: rgba(255,255,255,0.85);
-  margin-bottom: 5px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 2px;
 }
 .promo-headline {
   font-size: 22px; font-weight: 800; color: #fff;
@@ -943,9 +942,9 @@ ul { list-style: none; }
   line-height: 1.2;
 }
 .promo-desc {
-  font-size: 12.5px; color: rgba(255,255,255,0.78);
-  line-height: 1.6; margin-bottom: 16px;
-  max-width: 360px;
+  font-size: 12px; color: rgba(255,255,255,0.65);
+  line-height: 1.5; margin-bottom: 12px;
+  max-width: 100%;
 }
 .promo-cta {
   display: -webkit-inline-box;
@@ -976,7 +975,7 @@ ul { list-style: none; }
 /* Promo dots */
 .promo-dots {
   position: absolute;
-  bottom: 16px; right: 24px;
+  bottom: 14px; right: 16px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1245,11 +1244,11 @@ ul { list-style: none; }
   .hero-slider { height: 260px; max-height: 260px; }
   .hero-img { border-radius: var(--r-xl); }
 
-  .promo-banner { height: 260px; }
-  .promo-inner  { padding: 0 20px 28px; }
-  .promo-headline { font-size: 18px; }
-  .promo-desc { font-size: 12px; margin-bottom: 12px; }
-  .promo-dots { right: 16px; bottom: 12px; }
+  .promo-img-wrap { height: 180px; }
+  .promo-inner  { padding: 12px 16px 16px; }
+  .promo-headline { font-size: 16px; }
+  .promo-desc { font-size: 11.5px; margin-bottom: 10px; }
+  .promo-dots { right: 12px; bottom: 10px; }
 
   .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .footer-bottom {
@@ -1297,13 +1296,14 @@ ul { list-style: none; }
   .hero-img { border-radius: var(--r-lg); }
   .hero-dots { bottom: 10px; padding: 4px 8px; }
 
-  .promo-banner { height: 220px; border-radius: var(--r-lg); }
-  .promo-inner  { padding: 0 16px 24px; }
-  .promo-label  { font-size: 12px; }
-  .promo-headline { font-size: 16px; margin-bottom: 6px; }
-  .promo-desc { font-size: 11.5px; margin-bottom: 10px; max-width: 100%; }
-  .promo-cta  { padding: 7px 16px; font-size: 12px; }
-  .promo-dots { right: 12px; bottom: 10px; }
+  .promo-banner { border-radius: var(--r-lg); }
+  .promo-img-wrap { height: 160px; }
+  .promo-inner  { padding: 10px 14px 14px; gap: 3px; }
+  .promo-label  { font-size: 11px; }
+  .promo-headline { font-size: 14px; margin-bottom: 0; }
+  .promo-desc { font-size: 11px; margin-bottom: 8px; }
+  .promo-cta  { padding: 6px 14px; font-size: 11.5px; }
+  .promo-dots { right: 10px; bottom: 8px; }
 
   .carousel-arrow { display: none; }
   .carousel-outer { margin: 0; }
