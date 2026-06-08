@@ -25,6 +25,7 @@ function initHeroSlider() {
   const slides = document.querySelectorAll('.hero-slide');
   const dots   = document.querySelectorAll('.hero-dot');
   if (!slides.length) return;
+
   function goTo(n) {
     slides[cur].classList.remove('active');
     if (dots[cur]) dots[cur].classList.remove('active');
@@ -32,8 +33,10 @@ function initHeroSlider() {
     slides[cur].classList.add('active');
     if (dots[cur]) dots[cur].classList.add('active');
   }
+
   dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
   let timer = setInterval(() => goTo(cur + 1), 5000);
+
   const sl = document.getElementById('heroSlider');
   if (sl) {
     sl.addEventListener('mouseenter', () => clearInterval(timer));
@@ -47,36 +50,42 @@ function initHeroSlider() {
   }
 }
 
-/* ── Promo Slider ─────────────────────────────────────────── */
+/* ── Promo Slider — fade opacity (bukan translateX) ───────── */
 function initPromoSlider() {
-  const track = document.getElementById('promoTrack');
-  const dots  = document.querySelectorAll('#promoDots .promo-dot');
-  if (!track || !dots.length) return;
+  const slides = document.querySelectorAll('.promo-slide-item');
+  const dots   = document.querySelectorAll('#promoDots .promo-dot');
+  if (!slides.length) return;
 
   let cur = 0;
-  const total = dots.length;
+
+  /* Set slide pertama active */
+  slides[0].classList.add('active');
+  if (dots[0]) dots[0].classList.add('active');
 
   function goTo(n) {
-    cur = ((n % total) + total) % total;
-    track.style.transform = `translateX(-${cur * 100}%)`;
-    dots.forEach((d, i) => d.classList.toggle('active', i === cur));
+    slides[cur].classList.remove('active');
+    if (dots[cur]) dots[cur].classList.remove('active');
+    cur = ((n % slides.length) + slides.length) % slides.length;
+    slides[cur].classList.add('active');
+    if (dots[cur]) dots[cur].classList.add('active');
   }
 
   dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
 
   let timer = setInterval(() => goTo(cur + 1), 6000);
-  const banner = track.closest('.promo-banner');
+
+  const banner = document.querySelector('.promo-banner');
   if (banner) {
     banner.addEventListener('mouseenter', () => clearInterval(timer));
     banner.addEventListener('mouseleave', () => { timer = setInterval(() => goTo(cur + 1), 6000); });
+    /* Swipe support */
+    let tx = 0;
+    banner.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+    banner.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - tx;
+      if (Math.abs(dx) > 48) goTo(cur + (dx < 0 ? 1 : -1));
+    }, { passive: true });
   }
-
-  let tx = 0;
-  track.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
-  track.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - tx;
-    if (Math.abs(dx) > 48) goTo(cur + (dx < 0 ? 1 : -1));
-  }, { passive: true });
 }
 
 /* ── Carousel Arrows ──────────────────────────────────────── */
@@ -249,7 +258,6 @@ async function loadProducts() {
       return;
     }
 
-    // Fetch semua review sekaligus
     const ids = prods.map(p => p.id);
     const { data: reviews } = await supabaseClient
       .from('reviews')
@@ -267,7 +275,7 @@ async function loadProducts() {
       .map(p => buildCard(p, getImg(p), ratingMap))
       .join('');
 
-    // ── Terlaris: wajib punya review (count > 0), diurutkan skor = count × avg
+    // ── Terlaris
     const prodsWithReview = prods.filter(p => {
       const r = ratingMap[p.id];
       return r && r.count > 0;
@@ -290,7 +298,7 @@ async function loadProducts() {
       }
     }
 
-    // ── Unggulan: wajib punya review, diurutkan avg tertinggi
+    // ── Unggulan
     if (trackUnggulan) {
       if (prodsWithReview.length === 0) {
         trackUnggulan.innerHTML = '<div class="carousel-empty">Belum ada produk dengan ulasan.</div>';
