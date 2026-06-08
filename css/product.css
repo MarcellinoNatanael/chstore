@@ -1,12 +1,22 @@
 /* ============================================================
    CHStore — product.css
    Styles khusus halaman produk (extend index.css)
+   Cross-browser: Android Chrome/Firefox, iOS Safari, Samsung Internet
    ============================================================ */
 
 /* ── Breadcrumb ─────────────────────────────────────────────── */
 .breadcrumb {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
   gap: 4px;
   padding: 18px 0 0;
   font-size: 12.5px;
@@ -14,18 +24,33 @@
 }
 .breadcrumb a {
   color: var(--g500);
+  -webkit-transition: var(--ease);
+  -o-transition: var(--ease);
   transition: var(--ease);
+  -webkit-tap-highlight-color: transparent;
+  min-height: 36px;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 .breadcrumb a:hover { color: var(--ink); }
 .breadcrumb-sep {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
   align-items: center;
   color: var(--g300);
 }
-.breadcrumb-current {
-  color: var(--ink);
-  font-weight: 600;
-}
+.breadcrumb-current { color: var(--ink); font-weight: 600; }
 
 /* ── Page Header ────────────────────────────────────────────── */
 .page-header {
@@ -45,24 +70,35 @@
 
 /* ── Products Grid ──────────────────────────────────────────── */
 .products-grid {
+  display: -ms-grid;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
   gap: 16px;
   padding-bottom: 48px;
+  padding-bottom: calc(48px + env(safe-area-inset-bottom, 0px));
 }
 
 .products-grid .product-card {
   min-width: unset;
   width: 100%;
+  /* Hardware acceleration */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 /* ── Skeleton ───────────────────────────────────────────────── */
 .prod-skeleton {
   height: 280px;
   border-radius: var(--r-lg);
+  background: -webkit-linear-gradient(left, var(--g100) 25%, var(--g200) 50%, var(--g100) 75%);
+  background: -o-linear-gradient(left, var(--g100) 25%, var(--g200) 50%, var(--g100) 75%);
   background: linear-gradient(90deg, var(--g100) 25%, var(--g200) 50%, var(--g100) 75%);
   background-size: 400% 100%;
+  -webkit-animation: shimmer 1.4s infinite;
   animation: shimmer 1.4s infinite;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: background-position;
 }
 
 /* ── Empty State ────────────────────────────────────────────── */
@@ -74,6 +110,8 @@
   font-size: 52px;
   margin-bottom: 16px;
   opacity: 0.3;
+  line-height: 1;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
 }
 .empty-title {
   font-size: 18px;
@@ -88,18 +126,36 @@
 
 /* ── Sort / Filter bar ──────────────────────────────────────── */
 .toolbar {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
   justify-content: space-between;
   margin-bottom: 20px;
   gap: 12px;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .toolbar-count {
   font-size: 13px;
   color: var(--g500);
 }
 .toolbar-sort {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
   align-items: center;
   gap: 8px;
 }
@@ -109,33 +165,76 @@
   white-space: nowrap;
 }
 .sort-select {
-  height: 32px;
+  height: 36px; /* larger tap target */
   padding: 0 28px 0 10px;
   border: 1px solid var(--g200);
   border-radius: var(--r-full);
   background: var(--white);
-  font-size: 12.5px;
+  font-size: 16px; /* prevent iOS zoom */
   font-family: inherit;
   color: var(--ink);
   cursor: pointer;
   outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23AEAEB2' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 10px center;
+  -webkit-transition: var(--ease);
+  -o-transition: var(--ease);
   transition: var(--ease);
+  -webkit-tap-highlight-color: transparent;
+  /* Needed for Android Chrome to show custom arrow */
+  background-color: var(--white);
+}
+@media screen and (min-width: 481px) {
+  .sort-select { font-size: 12.5px; height: 32px; }
 }
 .sort-select:focus {
   border-color: var(--ink);
   box-shadow: 0 0 0 3px var(--ink-08);
 }
 
-/* ── Responsive ─────────────────────────────────────────────── */
-@media (max-width: 640px) {
+/* ── Responsive — Large Mobile (≤ 640px) ────────────────────── */
+@media screen and (max-width: 640px) {
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
   .page-title { font-size: 20px; }
-  .toolbar { flex-direction: column; align-items: flex-start; }
+  .toolbar {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+  }
+  .toolbar-sort { width: 100%; -webkit-box-pack: justify; -webkit-justify-content: space-between; -ms-flex-pack: justify; justify-content: space-between; }
+  .sort-select { -webkit-box-flex: 1; -webkit-flex: 1; -ms-flex: 1; flex: 1; }
+}
+
+/* ── Responsive — Small Mobile (≤ 480px) ────────────────────── */
+@media screen and (max-width: 480px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+  }
+  .prod-skeleton { height: 240px; }
+  .page-title { font-size: 18px; }
+  .empty-state { padding: 60px 16px; }
+  .empty-icon { font-size: 40px; }
+  .empty-title { font-size: 16px; }
+}
+
+/* ── iOS safe area ───────────────────────────────────────────── */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .products-grid {
+    padding-bottom: calc(48px + env(safe-area-inset-bottom));
+  }
 }

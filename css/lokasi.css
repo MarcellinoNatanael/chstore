@@ -1,12 +1,22 @@
 /* ============================================================
    CHStore — lokasi.css
    Styles khusus halaman lokasi toko (extend index.css)
+   Cross-browser: Android Chrome/Firefox, iOS Safari, Samsung Internet
    ============================================================ */
 
 /* ── Breadcrumb ─────────────────────────────────────────────── */
 .breadcrumb {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
   gap: 4px;
   padding: 18px 0 0;
   font-size: 12.5px;
@@ -14,18 +24,33 @@
 }
 .breadcrumb a {
   color: var(--g500);
+  -webkit-transition: var(--ease);
+  -o-transition: var(--ease);
   transition: var(--ease);
+  min-height: 36px;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-tap-highlight-color: transparent;
 }
 .breadcrumb a:hover { color: var(--ink); }
 .breadcrumb-sep {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
   align-items: center;
   color: var(--g300);
 }
-.breadcrumb-current {
-  color: var(--ink);
-  font-weight: 600;
-}
+.breadcrumb-current { color: var(--ink); font-weight: 600; }
 
 /* ── Page Header ────────────────────────────────────────────── */
 .page-header {
@@ -45,11 +70,17 @@
 
 /* ── Lokasi Layout ──────────────────────────────────────────── */
 .lokasi-layout {
+  display: -ms-grid;
   display: grid;
+  -ms-grid-columns: 1fr 380px;
   grid-template-columns: 1fr 380px;
   gap: 24px;
+  -webkit-box-align: start;
+  -webkit-align-items: start;
+  -ms-flex-align: start;
   align-items: start;
   padding-bottom: 52px;
+  padding-bottom: calc(52px + env(safe-area-inset-bottom, 0px));
 }
 
 /* ── Map ────────────────────────────────────────────────────── */
@@ -59,22 +90,39 @@
   overflow: hidden;
   border: 1px solid var(--g200);
   background: var(--g100);
+  /* Fix Safari border-radius + overflow */
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
 }
 .lokasi-map iframe {
   width: 100%;
   height: 100%;
   display: block;
+  border: none; /* Remove default iframe border on some browsers */
 }
 
 /* ── Info Panel ─────────────────────────────────────────────── */
 .lokasi-info {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
   flex-direction: column;
   gap: 20px;
 }
 
 .lokasi-name {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
   align-items: center;
   gap: 8px;
   font-size: 18px;
@@ -83,6 +131,8 @@
   letter-spacing: -0.3px;
 }
 .lokasi-name svg {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
   flex-shrink: 0;
   color: var(--ink);
 }
@@ -96,7 +146,9 @@
 
 /* ── Info Cards ─────────────────────────────────────────────── */
 .lokasi-cards {
+  display: -ms-grid;
   display: grid;
+  -ms-grid-columns: 1fr 1fr 1fr;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 }
@@ -106,14 +158,25 @@
   border-radius: var(--r-lg);
   padding: 14px 10px;
   text-align: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
   align-items: center;
   gap: 5px;
 }
 .lokasi-card-icon {
   font-size: 22px;
   line-height: 1;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
 }
 .lokasi-card-label {
   font-size: 10.5px;
@@ -130,7 +193,10 @@
 .lokasi-card-link {
   color: var(--ink);
   font-weight: 600;
+  -webkit-transition: var(--ease);
+  -o-transition: var(--ease);
   transition: var(--ease);
+  -webkit-tap-highlight-color: transparent;
 }
 .lokasi-card-link:hover {
   color: var(--g500);
@@ -138,14 +204,30 @@
 
 /* ── Action Buttons ─────────────────────────────────────────── */
 .lokasi-actions {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
   flex-direction: column;
   gap: 10px;
 }
 
 .btn-maps {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
   justify-content: center;
   gap: 8px;
   padding: 11px 20px;
@@ -155,17 +237,37 @@
   font-size: 13px;
   font-weight: 700;
   border: 1.5px solid var(--ink);
+  -webkit-transition: var(--ease);
+  -o-transition: var(--ease);
   transition: var(--ease);
   font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  min-height: 44px;
+  cursor: pointer;
+  /* Remove iOS button default */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 .btn-maps:hover {
   background: var(--white);
   color: var(--ink);
 }
+.btn-maps:active { opacity: 0.75; }
 
 .btn-wa {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
   justify-content: center;
   gap: 8px;
   padding: 11px 20px;
@@ -175,16 +277,26 @@
   font-size: 13px;
   font-weight: 700;
   border: 1.5px solid var(--g200);
+  -webkit-transition: var(--ease);
+  -o-transition: var(--ease);
   transition: var(--ease);
   font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  min-height: 44px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 .btn-wa:hover {
   border-color: var(--ink);
   background: var(--g50);
 }
+.btn-wa:active { opacity: 0.75; }
 
-/* ── Responsive ─────────────────────────────────────────────── */
-@media (max-width: 780px) {
+/* ── Responsive — Tablet (≤ 780px) ──────────────────────────── */
+@media screen and (max-width: 780px) {
   .lokasi-layout {
     grid-template-columns: 1fr;
   }
@@ -192,11 +304,33 @@
     height: 300px;
   }
 }
-@media (max-width: 480px) {
+
+/* ── Responsive — Large Mobile (≤ 640px) ────────────────────── */
+@media screen and (max-width: 640px) {
+  .page-title { font-size: 20px; }
+  .lokasi-name { font-size: 16px; }
+}
+
+/* ── Responsive — Small Mobile (≤ 480px) ────────────────────── */
+@media screen and (max-width: 480px) {
   .lokasi-cards {
     grid-template-columns: 1fr;
   }
   .lokasi-map {
     height: 260px;
+  }
+  .page-title { font-size: 18px; }
+  .lokasi-address { font-size: 13px; padding-left: 0; }
+
+  .btn-maps,
+  .btn-wa {
+    width: 100%;
+  }
+}
+
+/* ── iOS safe area ───────────────────────────────────────────── */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .lokasi-layout {
+    padding-bottom: calc(52px + env(safe-area-inset-bottom));
   }
 }

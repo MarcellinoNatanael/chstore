@@ -1,65 +1,175 @@
 /* ============================================================
    CHStore — register-admin.css
    Extend login-admin.css untuk kebutuhan form register
+   Responsive: Mobile / Tablet / Desktop
+   Cross-browser: Android Chrome, Android Firefox, iOS Safari, Samsung Internet
    ============================================================ */
 
-/* Card lebih tinggi — ada lebih banyak field */
+/* ── Card lebih tinggi — ada lebih banyak field ─────────────── */
 .auth-wrap { max-width: 440px; }
 
-/* Alert success */
+/* ── Alert success ──────────────────────────────────────────── */
 .auth-alert-success {
   background: #F0FDF4;
   border-color: #BBF7D0;
   color: #166534;
 }
-.auth-alert-success.show { display: flex; }
+.auth-alert-success.show {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
 
-/* Required asterisk */
+/* ── Required asterisk ──────────────────────────────────────── */
 .form-required {
   color: #C0392B;
   margin-left: 2px;
 }
 
-/* Inline text + link di baris yang sama */
+/* ── Inline text + link di baris yang sama ──────────────────── */
 .auth-link-muted-text {
   font-size: 13px;
   color: var(--g600);
 }
 
-/* Password strength meter */
+/* ── Password strength meter ────────────────────────────────── */
 .password-strength {
   margin-top: 8px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
   align-items: center;
   gap: 10px;
 }
+
 .strength-bar {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
   flex: 1;
   height: 4px;
   background: var(--g200);
   border-radius: 2px;
   overflow: hidden;
+  /* Prevent Safari border-radius + overflow bug */
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
 }
+
 .strength-fill {
   height: 100%;
   border-radius: 2px;
   width: 0%;
+  -webkit-transition: width 0.3s ease, background 0.3s ease;
+  -o-transition: width 0.3s ease, background 0.3s ease;
   transition: width 0.3s ease, background 0.3s ease;
+  /* Hardware-accelerate the fill animation */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: width;
 }
+
 .strength-label {
   font-size: 11px;
   font-weight: 600;
   white-space: nowrap;
   min-width: 56px;
   text-align: right;
+  /* Prevent layout shift during text change */
+  -webkit-font-variant-numeric: tabular-nums;
+  font-variant-numeric: tabular-nums;
 }
 
-/* Strength levels */
+/* ── Strength levels ─────────────────────────────────────────── */
 .strength-weak   { background: #EF4444; }
 .strength-fair   { background: #F97316; }
 .strength-good   { background: #EAB308; }
 .strength-strong { background: #22C55E; }
 
-@media (max-width: 480px) {
+/* ── Form input overrides for better cross-browser behavior ──── */
+
+/* Prevent iOS zoom on input focus (font-size must be ≥ 16px triggers zoom,
+   so we override the inherited 13.5px from login-admin.css here) */
+.auth-wrap .form-input {
+  font-size: 16px;
+  /* Scale back visually without triggering zoom — use transform trick if needed */
+}
+
+/* For screens wide enough, restore smaller size */
+@media screen and (min-width: 481px) {
+  .auth-wrap .form-input {
+    font-size: 13.5px;
+  }
+}
+
+/* Remove iOS default styling on inputs */
+.auth-wrap .form-input,
+.auth-wrap .btn-login {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: var(--r-md);
+}
+
+/* Improve tap target & remove tap highlight on buttons */
+.auth-wrap .btn-login,
+.auth-wrap .toggle-pass {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  min-height: 44px;
+}
+
+/* Fix Firefox button alignment */
+.auth-wrap button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/* ── Responsive — Small Mobile (≤ 480px) ────────────────────── */
+@media screen and (max-width: 480px) {
   .auth-card { padding: 28px 18px 22px; }
+
+  .auth-wrap { max-width: 100%; }
+
+  .password-strength { gap: 8px; }
+  .strength-label { font-size: 10.5px; min-width: 50px; }
+
+  /* Tighten spacing on small screens */
+  .auth-brand { margin-bottom: 20px; }
+  .auth-desc  { margin-bottom: 18px; }
+}
+
+/* ── Extra small (≤ 360px — common Android budget phones) ────── */
+@media screen and (max-width: 360px) {
+  .auth-card { padding: 22px 14px 18px; }
+
+  .auth-brand-name { font-size: 18px; }
+  .auth-title      { font-size: 17px; }
+
+  .strength-label  { display: none; }
+}
+
+/* ── iOS safe area (for fullscreen/standalone mode) ─────────── */
+@supports (padding: env(safe-area-inset-bottom)) {
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* ── High DPI / Retina border sharpness ──────────────────────── */
+@media (-webkit-min-device-pixel-ratio: 2),
+       (min-resolution: 192dpi) {
+  .auth-card,
+  .form-input,
+  .strength-bar {
+    /* Sharper borders on retina — no visual change needed, just ensure
+       antialiasing is consistent */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }

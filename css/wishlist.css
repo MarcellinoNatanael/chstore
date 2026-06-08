@@ -1,20 +1,52 @@
 /* ============================================================
    CHStore — wishlist.css
    Styles khusus halaman wishlist (extend index.css)
+   Responsive: Mobile (≤480px) / Large Mobile (≤640px) / Tablet (≤860px) / Desktop
+   Cross-browser: Android Chrome, Android Firefox, iOS Safari, Samsung Internet
    ============================================================ */
 
 /* ── Breadcrumb ─────────────────────────────────────────────── */
 .breadcrumb {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
   align-items: center;
   gap: 4px;
   padding: 18px 0 0;
   font-size: 12.5px;
   color: var(--g500);
+  /* Prevent text wrapping issues on small screens */
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
 }
-.breadcrumb a { color: var(--g500); transition: var(--ease); }
+.breadcrumb a {
+  color: var(--g500);
+  -webkit-transition: var(--ease);
+  -o-transition: var(--ease);
+  transition: var(--ease);
+  /* Improve tap target on touch devices */
+  padding: 2px 0;
+}
 .breadcrumb a:hover { color: var(--ink); }
-.breadcrumb-sep { display: flex; align-items: center; color: var(--g300); }
+/* iOS Safari active state */
+.breadcrumb a:active { color: var(--ink); opacity: 0.7; }
+
+.breadcrumb-sep {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  color: var(--g300);
+}
 .breadcrumb-current { color: var(--ink); font-weight: 600; }
 
 /* ── Page Header ────────────────────────────────────────────── */
@@ -25,6 +57,10 @@
   letter-spacing: -0.5px;
   color: var(--ink);
   margin-bottom: 4px;
+  /* Prevent orphaned words on mobile */
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
 }
 .page-subtitle { font-size: 13px; color: var(--g500); }
 
@@ -33,59 +69,99 @@
 
 /* ── Skeleton Grid ──────────────────────────────────────────── */
 .wish-skeleton-grid {
+  display: -ms-grid;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
   gap: 16px;
   padding-bottom: 48px;
+  /* iOS Safari safe area padding */
+  padding-bottom: calc(48px + env(safe-area-inset-bottom, 0px));
 }
+
 .prod-skeleton {
   height: 280px;
   border-radius: var(--r-lg);
+  background: -webkit-linear-gradient(left, var(--g100) 25%, var(--g200) 50%, var(--g100) 75%);
+  background: -o-linear-gradient(left, var(--g100) 25%, var(--g200) 50%, var(--g100) 75%);
   background: linear-gradient(90deg, var(--g100) 25%, var(--g200) 50%, var(--g100) 75%);
   background-size: 400% 100%;
+  -webkit-animation: shimmer 1.4s infinite;
   animation: shimmer 1.4s infinite;
+  /* Prevent repaint jank on mobile */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: background-position;
 }
 
 /* ── Products Grid (diisi JS) ───────────────────────────────── */
 .wish-grid {
+  display: -ms-grid;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
   gap: 16px;
   padding-bottom: 48px;
+  /* iOS Safari safe area padding */
+  padding-bottom: calc(48px + env(safe-area-inset-bottom, 0px));
 }
+
 .wish-grid .product-card {
   min-width: unset;
   width: 100%;
+  /* Hardware acceleration for hover/touch */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 /* ── Empty / Login State ────────────────────────────────────── */
 .wish-empty {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
   align-items: center;
   text-align: center;
   padding: 80px 20px;
   gap: 12px;
 }
+
 .wish-empty-icon {
   font-size: 52px;
   opacity: 0.25;
   line-height: 1;
+  /* Consistent emoji rendering across platforms */
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
 }
+
 .wish-empty-title {
   font-size: 20px;
   font-weight: 800;
   color: var(--ink);
   letter-spacing: -0.3px;
 }
+
 .wish-empty-desc {
   font-size: 13.5px;
   color: var(--g500);
   max-width: 320px;
   line-height: 1.65;
 }
+
 .wish-empty-btn {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
   align-items: center;
   gap: 7px;
   margin-top: 8px;
@@ -96,19 +172,95 @@
   font-size: 13px;
   font-weight: 700;
   border: 1.5px solid var(--ink);
+  -webkit-transition: var(--ease);
+  -o-transition: var(--ease);
   transition: var(--ease);
   font-family: inherit;
+  /* Prevent double-tap zoom on iOS */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  /* Minimum tap target size (WCAG 2.5.5) */
+  min-height: 44px;
+  cursor: pointer;
 }
 .wish-empty-btn:hover {
   background: var(--white);
   color: var(--ink);
 }
+/* iOS Safari active state feedback */
+.wish-empty-btn:active {
+  opacity: 0.75;
+  -webkit-transform: scale(0.98);
+  transform: scale(0.98);
+}
 
-/* ── Responsive ─────────────────────────────────────────────── */
-@media (max-width: 640px) {
+/* ── Responsive — Tablet (≤ 860px) ──────────────────────────── */
+@media screen and (max-width: 860px) {
+  .wish-grid,
+  .wish-skeleton-grid {
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 14px;
+  }
+}
+
+/* ── Responsive — Large Mobile (≤ 640px) ────────────────────── */
+@media screen and (max-width: 640px) {
   .wish-grid,
   .wish-skeleton-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+  }
+
+  .page-title { font-size: 20px; }
+
+  .wish-empty { padding: 60px 16px; }
+  .wish-empty-title { font-size: 18px; }
+  .wish-empty-desc { font-size: 13px; }
+}
+
+/* ── Responsive — Small Mobile (≤ 480px) ────────────────────── */
+@media screen and (max-width: 480px) {
+  .wish-grid,
+  .wish-skeleton-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .prod-skeleton { height: 240px; }
+
+  .page-title { font-size: 18px; letter-spacing: -0.3px; }
+
+  .wish-empty { padding: 48px 12px; gap: 10px; }
+  .wish-empty-icon { font-size: 40px; }
+  .wish-empty-title { font-size: 17px; }
+  .wish-empty-desc { font-size: 12.5px; max-width: 100%; }
+  .wish-empty-btn {
+    padding: 10px 22px;
+    font-size: 12.5px;
+    width: 100%;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+
+  /* Breadcrumb compact */
+  .breadcrumb { font-size: 11.5px; padding: 14px 0 0; }
+}
+
+/* ── iOS Safe Area (notch/home bar) ─────────────────────────── */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .wish-grid,
+  .wish-skeleton-grid {
+    padding-bottom: calc(48px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ── Firefox-specific fixes ──────────────────────────────────── */
+@-moz-document url-prefix() {
+  .wish-empty-btn {
+    /* Firefox doesn't support -webkit-tap-highlight-color */
+    outline-offset: 2px;
   }
 }
