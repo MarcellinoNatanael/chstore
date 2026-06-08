@@ -49,20 +49,17 @@
   ═══════════════════════════════════════ -->
   <header class="site-header">
 
-    <!-- ROW 1: Logo + Search + Cart -->
     <div class="header-inner">
       <a href="index.html" class="logo" aria-label="CHStore Home">
         <img src="../img/CHStore Logo.png" alt="CHStore" class="logo-img">
       </a>
 
-      <!-- search-bar is the positioning context for both icon, button, AND dropdown -->
       <div class="search-bar">
         <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
           <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
         </svg>
         <input type="search" id="searchInput" placeholder="Cari produk" autocomplete="off">
 
-        <!-- Filter button sits directly inside .search-bar so top:50% works correctly -->
         <button class="search-filter-btn" id="filterToggleBtn" aria-label="Filter" aria-expanded="false">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="4" y1="6" x2="20" y2="6"/>
@@ -71,9 +68,7 @@
           </svg>
         </button>
 
-        <!-- Dropdown also inside .search-bar so right:0 aligns to the bar edge -->
         <div class="filter-dropdown" id="filterDropdown">
-          <!-- Urutan -->
           <div class="filter-section">
             <div class="filter-section-title">Urutkan</div>
             <div class="filter-chips">
@@ -83,7 +78,6 @@
               <button class="filter-chip" data-filter-sort="termahal">Termahal</button>
             </div>
           </div>
-          <!-- Kondisi -->
           <div class="filter-section">
             <div class="filter-section-title">Kondisi</div>
             <div class="filter-chips">
@@ -92,7 +86,6 @@
               <button class="filter-chip" data-filter-cond="second">Second</button>
             </div>
           </div>
-          <!-- Harga -->
           <div class="filter-section">
             <div class="filter-section-title">Rentang Harga</div>
             <div class="filter-price-row">
@@ -101,7 +94,6 @@
               <input type="text" class="filter-price-input" id="filterPriceMax" placeholder="Max (Rp)">
             </div>
           </div>
-          <!-- Actions -->
           <div class="filter-actions">
             <button class="filter-reset-btn" id="filterResetBtn">Reset</button>
             <button class="filter-apply-btn" id="filterApplyBtn">Terapkan</button>
@@ -119,7 +111,6 @@
       </div>
     </div>
 
-    <!-- ROW 2: Nav -->
     <nav class="main-nav" aria-label="Navigasi utama">
       <div class="nav-inner">
         <a href="index.html" class="nav-link active">Beranda</a>
@@ -241,26 +232,31 @@
       </div>
     </section>
 
-    <!-- PROMO BANNER -->
+    <!-- PROMO BANNER
+         Struktur baru: promo-img-wrap (background) + promo-inner (teks overlay)
+         keduanya SEJAJAR di dalam .promo-slide-item, bukan nested
+    -->
     <section class="promo-section">
       <div class="content-wrap">
         <div class="promo-banner">
-          <div class="promo-slides-track" id="promoTrack">
+          <div class="promo-slides-track">
 
             <!-- Slide 1 -->
-            <div class="promo-slide-item">
+            <div class="promo-slide-item active">
+              <!-- Background image -->
+              <div class="promo-img-wrap">
+                <img src="../img/download (2).jpg" alt="iPhone 17e" class="promo-img"
+                     onerror="this.src='https://placehold.co/900x380/1d1d1f/cccccc?text=iPhone+17e'">
+              </div>
+              <!-- Teks overlay -->
               <div class="promo-inner">
                 <div class="promo-label">
-                  <svg viewBox="0 0 14 17" width="16" height="16" fill="#fff">
+                  <svg viewBox="0 0 14 17" width="14" height="14" fill="#fff">
                     <path d="M13.23 13.3c-.58.87-1.2 1.72-2.14 1.73-.94.02-1.24-.55-2.3-.55-1.07 0-1.4.54-2.29.57-.92.04-1.61-.92-2.2-1.77C2.97 11.9 2.06 8.71 3.29 6.57c.61-1.07 1.7-1.74 2.88-1.76.9-.01 1.75.61 2.3.61.55 0 1.58-.75 2.66-.64.45.02 1.73.18 2.55 1.39-.06.04-1.52.9-1.5 2.67.02 2.11 1.86 2.82 1.87 2.82-.02.05-.29 1.01-.97 1.98M9.1 2.45c.51-.58 1.36-1.02 2.06-1.05.09.82-.24 1.65-.73 2.23-.48.6-1.28 1.06-2.07.99-.1-.8.29-1.64.74-2.17z"/>
                   </svg>
                   <span>iPhone 17e</span>
                 </div>
                 <h2 class="promo-headline">Fitur lengkap. Begitu sepadan.</h2>
-                <div class="promo-img-wrap">
-                  <img src="../img/download (2).jpg" alt="iPhone 17e" class="promo-img"
-                       onerror="this.src='https://placehold.co/480x300/2c2c2e/cccccc?text=iPhone+17e'">
-                </div>
                 <p class="promo-desc">Kini tersedia. Mulai Rp 562.458 /bln*. Bebas cicilan s.d. 2 bulan dan dapatkan Apple Adapter 20W (USB-C)*.</p>
                 <a href="product.html?category=iphone" class="promo-cta">Selengkapnya</a>
               </div>
@@ -268,18 +264,18 @@
 
             <!-- Slide 2 -->
             <div class="promo-slide-item">
+              <div class="promo-img-wrap">
+                <img src="../img/download.jpg" alt="MacBook Air M4" class="promo-img"
+                     onerror="this.src='https://placehold.co/900x380/1d1d1f/cccccc?text=MacBook+Air+M4'">
+              </div>
               <div class="promo-inner">
                 <div class="promo-label">
-                  <svg viewBox="0 0 14 17" width="16" height="16" fill="#fff">
+                  <svg viewBox="0 0 14 17" width="14" height="14" fill="#fff">
                     <path d="M13.23 13.3c-.58.87-1.2 1.72-2.14 1.73-.94.02-1.24-.55-2.3-.55-1.07 0-1.4.54-2.29.57-.92.04-1.61-.92-2.2-1.77C2.97 11.9 2.06 8.71 3.29 6.57c.61-1.07 1.7-1.74 2.88-1.76.9-.01 1.75.61 2.3.61.55 0 1.58-.75 2.66-.64.45.02 1.73.18 2.55 1.39-.06.04-1.52.9-1.5 2.67.02 2.11 1.86 2.82 1.87 2.82-.02.05-.29 1.01-.97 1.98M9.1 2.45c.51-.58 1.36-1.02 2.06-1.05.09.82-.24 1.65-.73 2.23-.48.6-1.28 1.06-2.07.99-.1-.8.29-1.64.74-2.17z"/>
                   </svg>
                   <span>MacBook Air M4</span>
                 </div>
                 <h2 class="promo-headline">Lebih tipis. Lebih kencang.</h2>
-                <div class="promo-img-wrap">
-                  <img src="../img/download.jpg" alt="MacBook Air M4" class="promo-img"
-                       onerror="this.src='https://placehold.co/480x300/2c2c2e/cccccc?text=MacBook+Air+M4'">
-                </div>
                 <p class="promo-desc">Chip M4 yang revolusioner. Baterai seharian penuh. Desain yang timeless. Mulai Rp 17.999.000.</p>
                 <a href="product.html?category=mac" class="promo-cta">Selengkapnya</a>
               </div>
@@ -287,18 +283,18 @@
 
             <!-- Slide 3 -->
             <div class="promo-slide-item">
+              <div class="promo-img-wrap">
+                <img src="../img/download (3).jpg" alt="iPad Air M3" class="promo-img"
+                     onerror="this.src='https://placehold.co/900x380/1d1d1f/cccccc?text=iPad+Air+M3'">
+              </div>
               <div class="promo-inner">
                 <div class="promo-label">
-                  <svg viewBox="0 0 14 17" width="16" height="16" fill="#fff">
+                  <svg viewBox="0 0 14 17" width="14" height="14" fill="#fff">
                     <path d="M13.23 13.3c-.58.87-1.2 1.72-2.14 1.73-.94.02-1.24-.55-2.3-.55-1.07 0-1.4.54-2.29.57-.92.04-1.61-.92-2.2-1.77C2.97 11.9 2.06 8.71 3.29 6.57c.61-1.07 1.7-1.74 2.88-1.76.9-.01 1.75.61 2.3.61.55 0 1.58-.75 2.66-.64.45.02 1.73.18 2.55 1.39-.06.04-1.52.9-1.5 2.67.02 2.11 1.86 2.82 1.87 2.82-.02.05-.29 1.01-.97 1.98M9.1 2.45c.51-.58 1.36-1.02 2.06-1.05.09.82-.24 1.65-.73 2.23-.48.6-1.28 1.06-2.07.99-.1-.8.29-1.64.74-2.17z"/>
                   </svg>
                   <span>iPad Air M3</span>
                 </div>
                 <h2 class="promo-headline">Serba bisa. Seharian penuh.</h2>
-                <div class="promo-img-wrap">
-                  <img src="../img/download (3).jpg" alt="iPad Air M3" class="promo-img"
-                       onerror="this.src='https://placehold.co/480x300/2c2c2e/cccccc?text=iPad+Air+M3'">
-                </div>
                 <p class="promo-desc">Performa chip M3 dalam desain ultra tipis. Layar Liquid Retina yang memukau. Mulai Rp 11.499.000.</p>
                 <a href="product.html?category=ipad" class="promo-cta">Selengkapnya</a>
               </div>
@@ -306,19 +302,19 @@
 
             <!-- Slide 4 -->
             <div class="promo-slide-item">
+              <div class="promo-img-wrap">
+                <img src="../img/download (4).jpg" alt="MacBook Neo" class="promo-img"
+                     onerror="this.src='https://placehold.co/900x380/1d1d1f/cccccc?text=MacBook+Neo'">
+              </div>
               <div class="promo-inner">
                 <div class="promo-label">
-                  <svg viewBox="0 0 14 17" width="16" height="16" fill="#fff">
+                  <svg viewBox="0 0 14 17" width="14" height="14" fill="#fff">
                     <path d="M13.23 13.3c-.58.87-1.2 1.72-2.14 1.73-.94.02-1.24-.55-2.3-.55-1.07 0-1.4.54-2.29.57-.92.04-1.61-.92-2.2-1.77C2.97 11.9 2.06 8.71 3.29 6.57c.61-1.07 1.7-1.74 2.88-1.76.9-.01 1.75.61 2.3.61.55 0 1.58-.75 2.66-.64.45.02 1.73.18 2.55 1.39-.06.04-1.52.9-1.5 2.67.02 2.11 1.86 2.82 1.87 2.82-.02.05-.29 1.01-.97 1.98M9.1 2.45c.51-.58 1.36-1.02 2.06-1.05.09.82-.24 1.65-.73 2.23-.48.6-1.28 1.06-2.07.99-.1-.8.29-1.64.74-2.17z"/>
                   </svg>
                   <span>MacBook Neo</span>
                 </div>
                 <h2 class="promo-headline">Lebih ringan. Lebih pintar.</h2>
-                <div class="promo-img-wrap">
-                  <img src="../img/download (4).jpg" alt="MacBook Neo" class="promo-img"
-                       onerror="this.src='https://placehold.co/480x300/2c2c2e/cccccc?text=MacBook+Neo'">
-                </div>
-                <p class="promo-desc">MacBook Neo hadir dengan chip generasi terbaru, layar yang lebih tajam, dan bobot yang semakin ringan. Produktivitas tanpa batas, seharian penuh.</p>
+                <p class="promo-desc">MacBook Neo hadir dengan chip generasi terbaru, layar lebih tajam, bobot semakin ringan. Mulai Rp 19.999.000.</p>
                 <a href="product.html?category=mac" class="promo-cta">Selengkapnya</a>
               </div>
             </div>
