@@ -2,6 +2,7 @@
    CHStore — product.css
    Styles khusus halaman produk (extend index.css)
    Cross-browser: Android Chrome/Firefox, iOS Safari, Samsung Internet
+   FIXED: Safari iOS horizontal overflow / melebar ke kanan
    ============================================================ */
 
 /* ── Breadcrumb ─────────────────────────────────────────────── */
@@ -21,6 +22,9 @@
   padding: 18px 0 0;
   font-size: 12.5px;
   color: var(--g500);
+  /* FIX: pastikan tidak overflow */
+  width: 100%;
+  box-sizing: border-box;
 }
 .breadcrumb a {
   color: var(--g500);
@@ -76,6 +80,10 @@
   gap: 16px;
   padding-bottom: 48px;
   padding-bottom: calc(48px + env(safe-area-inset-bottom, 0px));
+  /* FIX: pastikan grid tidak overflow di Safari */
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 .products-grid .product-card {
@@ -143,6 +151,9 @@
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  /* FIX: Safari overflow */
+  width: 100%;
+  box-sizing: border-box;
 }
 .toolbar-count {
   font-size: 13px;
@@ -165,7 +176,7 @@
   white-space: nowrap;
 }
 .sort-select {
-  height: 36px; /* larger tap target */
+  height: 36px;
   padding: 0 28px 0 10px;
   border: 1px solid var(--g200);
   border-radius: var(--r-full);
@@ -185,8 +196,10 @@
   -o-transition: var(--ease);
   transition: var(--ease);
   -webkit-tap-highlight-color: transparent;
-  /* Needed for Android Chrome to show custom arrow */
   background-color: var(--white);
+  /* FIX: max-width agar tidak overflow di Safari */
+  max-width: 100%;
+  box-sizing: border-box;
 }
 @media screen and (min-width: 481px) {
   .sort-select { font-size: 12.5px; height: 32px; }
@@ -201,6 +214,10 @@
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+    /* FIX: pastikan tidak ada width yang melebihi viewport */
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   .page-title { font-size: 20px; }
   .toolbar {
@@ -214,8 +231,21 @@
     -ms-flex-align: start;
     align-items: flex-start;
   }
-  .toolbar-sort { width: 100%; -webkit-box-pack: justify; -webkit-justify-content: space-between; -ms-flex-pack: justify; justify-content: space-between; }
-  .sort-select { -webkit-box-flex: 1; -webkit-flex: 1; -ms-flex: 1; flex: 1; }
+  .toolbar-sort {
+    width: 100%;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+  }
+  .sort-select {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    /* FIX: min-width 0 untuk flexbox di Safari */
+    min-width: 0;
+  }
 }
 
 /* ── Responsive — Small Mobile (≤ 480px) ────────────────────── */
@@ -224,17 +254,51 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
     padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+    /* FIX: Safari iOS grid overflow */
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
   }
   .prod-skeleton { height: 240px; }
   .page-title { font-size: 18px; }
   .empty-state { padding: 60px 16px; }
   .empty-icon { font-size: 40px; }
   .empty-title { font-size: 16px; }
+
+  /* FIX: main element di halaman produk */
+  main {
+    overflow: hidden;
+    width: 100%;
+  }
 }
 
 /* ── iOS safe area ───────────────────────────────────────────── */
 @supports (padding: env(safe-area-inset-bottom)) {
   .products-grid {
     padding-bottom: calc(48px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SAFARI iOS SPECIFIC FIX — product page
+════════════════════════════════════════════════════════════════ */
+@supports (-webkit-touch-callout: none) {
+  /* Hanya terbaca oleh Safari iOS */
+  .products-grid {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Grid item tidak boleh overflow */
+  .products-grid .product-card {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Pastikan content-wrap juga terkunci */
+  .content-wrap {
+    overflow-x: hidden;
   }
 }

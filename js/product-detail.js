@@ -232,7 +232,7 @@ async function initWishlistBtn(productId) {
 
 /* ── WhatsApp ───────────────────────────────────────────────── */
 function initWA() {
-  const wa = product?.whatsapp_number || '6281234567890';
+  const wa = product?.whatsapp_number || '6287853668755';
   const cleaned = wa.replace(/\D/g, '');
   const waNum = cleaned.startsWith('0') ? '62' + cleaned.slice(1) : cleaned;
   const btnWA = document.getElementById('pdBtnWA');

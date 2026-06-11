@@ -2,13 +2,22 @@
    CHStore — index.css  (Responsive: Mobile / Tablet / Desktop)
    Breakpoints: 480px | 640px | 860px
    Cross-browser: Android Chrome/Firefox, iOS Safari, Samsung Internet
+   FIXED: Safari iOS horizontal overflow / melebar ke kanan
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&display=swap');
 
 /* ── RESET ──────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; overflow-x: hidden; }
+
+/* FIX: Safari iOS — overflow-x hidden harus ada di KEDUANYA html dan body,
+   plus width 100% dengan position relative agar benar-benar terkunci */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
+  position: relative; /* Safari fix */
+}
 body {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
   color: #1C1C1C;
@@ -19,6 +28,7 @@ body {
   overflow-x: hidden;
   width: 100%;
   max-width: 100vw;
+  position: relative; /* Safari fix */
 }
 a   { text-decoration: none; color: inherit; }
 img { display: block; max-width: 100%; }
@@ -63,6 +73,9 @@ ul { list-style: none; }
   max-width: var(--max);
   margin: 0 auto;
   padding: 0 var(--pad);
+  /* FIX: pastikan content-wrap tidak overflow */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -79,6 +92,11 @@ ul { list-style: none; }
   border-bottom: 1px solid var(--g200);
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
+  /* FIX: Safari sticky header overflow */
+  width: 100%;
+  max-width: 100%;
+  left: 0;
+  right: 0;
 }
 
 .header-inner {
@@ -97,6 +115,9 @@ ul { list-style: none; }
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  /* FIX: cegah header inner overflow */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .logo {
@@ -231,7 +252,9 @@ ul { list-style: none; }
   -webkit-transition: opacity 0.18s ease, -webkit-transform 0.18s ease;
   -o-transition: opacity 0.18s ease, transform 0.18s ease;
   transition: opacity 0.18s ease, transform 0.18s ease;
+  /* FIX: pastikan dropdown tidak overflow ke kanan */
   max-width: calc(100vw - 32px);
+  right: 0;
 }
 .filter-dropdown.open {
   opacity: 1;
@@ -407,6 +430,8 @@ ul { list-style: none; }
 .main-nav {
   border-top: 1px solid var(--g100);
   width: 100%;
+  /* FIX: nav tidak boleh overflow */
+  overflow: hidden;
 }
 .nav-inner {
   max-width: var(--max);
@@ -475,8 +500,19 @@ ul { list-style: none; }
 /* ════════════════════════════════════════════════════════════════
    HERO SLIDER
 ════════════════════════════════════════════════════════════════ */
-.hero-section { padding: 20px 0 0; }
-.hero-section .content-wrap { padding: 0 var(--pad); overflow: hidden; }
+.hero-section {
+  padding: 20px 0 0;
+  /* FIX: Safari — section wrapper harus overflow hidden */
+  overflow: hidden;
+  width: 100%;
+}
+.hero-section .content-wrap {
+  padding: 0 var(--pad);
+  overflow: hidden;
+  /* FIX: width 100% penting untuk Safari */
+  width: 100%;
+  box-sizing: border-box;
+}
 
 .hero-slider {
   position: relative;
@@ -485,8 +521,11 @@ ul { list-style: none; }
   line-height: 0;
   height: 380px;
   max-height: 380px;
-  -webkit-mask-image: radial-gradient(white, black);
+  /* FIX: ganti mask-image dengan clip-path untuk Safari kompatibilitas lebih baik */
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
   mask-image: radial-gradient(white, black);
+  /* FIX: tambahkan width constraint */
+  width: 100%;
 }
 .hero-img {
   position: absolute;
@@ -550,7 +589,12 @@ ul { list-style: none; }
 /* ════════════════════════════════════════════════════════════════
    PRODUCT CAROUSEL
 ════════════════════════════════════════════════════════════════ */
-.carousel-section { padding: 22px 0; }
+.carousel-section {
+  padding: 22px 0;
+  /* FIX: overflow hidden di level section */
+  overflow: hidden;
+  width: 100%;
+}
 .carousel-outer {
   position: relative;
   display: -webkit-box;
@@ -561,6 +605,9 @@ ul { list-style: none; }
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  /* FIX: cegah carousel outer overflow */
+  width: 100%;
+  min-width: 0;
 }
 .carousel-track {
   display: -webkit-box;
@@ -580,6 +627,8 @@ ul { list-style: none; }
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  /* FIX: min-width 0 penting untuk flexbox di Safari */
+  min-width: 0;
 }
 .carousel-track::-webkit-scrollbar { display: none; }
 
@@ -826,18 +875,31 @@ ul { list-style: none; }
 }
 
 /* ════════════════════════════════════════════════════════════════
-   PROMO BANNER — HERO-STYLE (gambar jadi background, teks overlay)
+   PROMO BANNER
 ════════════════════════════════════════════════════════════════ */
-.promo-section { padding: 0 0 32px; }
-.promo-section .content-wrap { padding: 0 var(--pad); }
+.promo-section {
+  padding: 0 0 32px;
+  /* FIX: overflow hidden di section */
+  overflow: hidden;
+  width: 100%;
+}
+.promo-section .content-wrap {
+  padding: 0 var(--pad);
+  /* FIX: Safari overflow clip */
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
 
 .promo-banner {
   border-radius: var(--r-xl);
   overflow: hidden;
   position: relative;
   background: #1d1d1f;
-  -webkit-mask-image: radial-gradient(white, black);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
   mask-image: radial-gradient(white, black);
+  /* FIX: width constraint */
+  width: 100%;
 }
 
 .promo-slides-track {
@@ -845,7 +907,6 @@ ul { list-style: none; }
   width: 100%;
 }
 
-/* Slide pertama pakai position relative untuk tentukan tinggi */
 .promo-slide-item {
   position: absolute;
   inset: 0;
@@ -876,7 +937,6 @@ ul { list-style: none; }
   pointer-events: none;
 }
 
-/* Gambar di bagian ATAS */
 .promo-img-wrap {
   position: relative;
   width: 100%;
@@ -894,14 +954,8 @@ ul { list-style: none; }
   object-fit: cover;
   display: block;
   border-radius: 0;
-  -webkit-animation: none;
-  animation: none;
-  -webkit-filter: none;
-  filter: none;
-  will-change: auto;
 }
 
-/* Teks di bagian BAWAH — solid dark */
 .promo-inner {
   background: #1d1d1f;
   padding: 14px 20px 18px;
@@ -974,7 +1028,6 @@ ul { list-style: none; }
 }
 .promo-cta:hover { background: #fff; color: var(--ink); border-color: #fff; }
 
-/* Promo dots */
 .promo-dots {
   position: absolute;
   bottom: 14px; right: 16px;
@@ -1019,6 +1072,9 @@ ul { list-style: none; }
   border-top: 1px solid var(--g200);
   padding: 36px 0 0;
   padding-bottom: env(safe-area-inset-bottom, 0px);
+  /* FIX: footer overflow */
+  width: 100%;
+  overflow: hidden;
 }
 .site-footer .content-wrap { padding: 0 var(--pad); }
 
@@ -1289,6 +1345,8 @@ ul { list-style: none; }
     -ms-flex: 1 1 100%;
     flex: 1 1 100%;
     max-width: 100%;
+    /* FIX: pastikan search bar tidak overflow di Safari */
+    min-width: 0;
   }
   .header-actions { margin-left: auto; }
   .cart-label { display: none; }
@@ -1313,11 +1371,14 @@ ul { list-style: none; }
     padding: 4px var(--pad) 8px;
     scroll-padding-left: var(--pad);
   }
-  /* iOS Safari: pastikan section tidak overflow */
+
+  /* FIX: Safari iOS — content-wrap carousel tidak punya horizontal padding
+     agar track bisa scroll dengan benar tanpa overflow */
   .carousel-section .content-wrap {
     padding-left: 0;
     padding-right: 0;
     overflow: hidden;
+    width: 100%;
   }
   .product-card   { min-width: 160px; }
   .card-skeleton  { min-width: 160px; }
@@ -1328,10 +1389,20 @@ ul { list-style: none; }
   .toast { width: 100%; text-align: center; }
   .section-heading h2 { font-size: 14px; }
 
-  /* iOS Safari overflow fix */
+  /* FIX: iOS Safari — pastikan semua section terkunci */
   .carousel-section,
   .hero-section,
-  .promo-section { overflow: hidden; }
+  .promo-section {
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* FIX: main element */
+  main {
+    overflow: hidden;
+    width: 100%;
+  }
 }
 
 /* ── iOS Safe Area ───────────────────────────────────────────── */
@@ -1348,5 +1419,57 @@ ul { list-style: none; }
     -webkit-transition-duration: 0.01ms !important;
     -o-transition-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SAFARI iOS GLOBAL FIX
+   Selector ini menargetkan Safari secara spesifik menggunakan
+   hack yang hanya dibaca Safari
+════════════════════════════════════════════════════════════════ */
+@supports (-webkit-touch-callout: none) {
+  /* Hanya Safari iOS */
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Semua section dan container utama */
+  .site-header,
+  main,
+  .hero-section,
+  .carousel-section,
+  .promo-section,
+  .site-footer {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* Carousel track: biarkan scroll horizontal di dalam,
+     tapi parent harus overflow hidden */
+  .carousel-outer {
+    overflow: hidden;
+  }
+
+  /* FIX: sticky header di Safari — translateZ sering bikin layout shift */
+  .site-header {
+    -webkit-transform: none;
+    transform: none;
+    /* Gunakan will-change untuk performa sticky */
+    will-change: transform;
+  }
+
+  /* FIX: product card hover transform jangan sampai bikin overflow */
+  .product-card:hover {
+    -webkit-transform: translateY(-2px) translateZ(0);
+    transform: translateY(-2px) translateZ(0);
+  }
+
+  /* FIX: content-wrap selalu 100% */
+  .content-wrap {
+    width: 100%;
+    max-width: var(--max);
+    box-sizing: border-box;
   }
 }

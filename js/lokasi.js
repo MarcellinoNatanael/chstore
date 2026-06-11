@@ -59,7 +59,7 @@ async function loadStoreInfo() {
       // Update display text
       const waDisplay = document.getElementById('lokasiWADisplay');
       if (waDisplay) {
-        // Format: 6281234567890 → +62 812-3456-7890
+        // Format: 6287853668755 → +62 878-5366-8755
         const formatted = '+' + raw.replace(/(\d{2})(\d{3})(\d{4})(\d+)/, '$1 $2-$3-$4');
         waDisplay.textContent = formatted;
       }

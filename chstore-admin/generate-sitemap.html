@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generate Sitemap — CHStore Admin</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0f0f0f;
+      color: #e5e5e5;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 40px;
+      width: 100%;
+      max-width: 680px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+
+    .icon {
+      width: 44px;
+      height: 44px;
+      background: #1d6fe8;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -0.3px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: #666;
+      margin-top: 2px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .stat {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: #555;
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-number.loading {
+      color: #333;
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    .preview {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 20px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 11.5px;
+      color: #4ec9b0;
+      line-height: 1.6;
+      max-height: 220px;
+      overflow-y: auto;
+      white-space: pre;
+    }
+
+    .preview.placeholder {
+      color: #333;
+      font-family: inherit;
+      font-size: 13px;
+      text-align: center;
+      padding: 40px;
+      white-space: normal;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      flex: 1;
+      padding: 13px 20px;
+      border-radius: 10px;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-generate {
+      background: #1d6fe8;
+      color: #fff;
+    }
+
+    .btn-generate:hover { background: #1a63d4; }
+    .btn-generate:disabled { background: #1a3a6e; color: #4a6fa5; cursor: not-allowed; }
+
+    .btn-download {
+      background: #18a058;
+      color: #fff;
+      display: none;
+    }
+
+    .btn-download:hover { background: #15904e; }
+
+    .status {
+      margin-top: 16px;
+      font-size: 13px;
+      color: #555;
+      text-align: center;
+      min-height: 20px;
+    }
+
+    .status.success { color: #18a058; }
+    .status.error { color: #e85d5d; }
+
+    .instruction {
+      margin-top: 24px;
+      padding: 14px 16px;
+      background: #111;
+      border: 1px solid #222;
+      border-left: 3px solid #1d6fe8;
+      border-radius: 0 8px 8px 0;
+      font-size: 12.5px;
+      color: #888;
+      line-height: 1.6;
+    }
+
+    .instruction strong { color: #aaa; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="header">
+    <div class="icon">🗺️</div>
+    <div>
+      <h1>Sitemap Generator</h1>
+      <div class="subtitle">CHStore Apple Reseller · chstoreapplereseller.com</div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-number loading" id="statPages">—</div>
+      <div class="stat-label">Halaman Statis</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number loading" id="statProducts">—</div>
+      <div class="stat-label">Produk</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number loading" id="statTotal">—</div>
+      <div class="stat-label">Total URL</div>
+    </div>
+  </div>
+
+  <div class="preview placeholder" id="preview">
+    Klik "Generate Sitemap" untuk membuat sitemap terbaru dengan semua produk dari database.
+  </div>
+
+  <div class="actions">
+    <button class="btn-generate" id="btnGenerate" onclick="generate()">⚡ Generate Sitemap</button>
+    <button class="btn-download" id="btnDownload" onclick="download()">⬇ Download Sitemap.xml</button>
+  </div>
+
+  <div class="status" id="status"></div>
+
+  <div class="instruction">
+    <strong>Cara pakai:</strong> Generate → Download → Upload file <strong>Sitemap.xml</strong> ke root folder project (timpa yang lama) → Done. Lakukan ini setiap kali menambah produk baru.
+  </div>
+</div>
+
+<script>
+  const SUPABASE_URL      = 'https://mtrjexkdryxhpaoujgsn.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10cmpleGtkcnl4aHBhb3VqZ3NuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwMjAxMTksImV4cCI6MjA5NTU5NjExOX0.uuYHOALz58tW4tby5YVz45EEzA7eT1CgesGfxSBByQM';
+  const BASE_URL          = 'https://chstoreapplereseller.com';
+
+  const STATIC_PAGES = [
+    { path: '/',                   changefreq: 'weekly',  priority: '1.0' },
+    { path: '/Customer/product.html',    changefreq: 'daily',   priority: '0.9' },
+    { path: '/Customer/lokasi.html',     changefreq: 'monthly', priority: '0.7' },
+    { path: '/Customer/wishlist.html',   changefreq: 'weekly',  priority: '0.5' },
+  ];
+
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  let xmlContent = '';
+
+  async function init() {
+    document.getElementById('statPages').textContent    = STATIC_PAGES.length;
+    document.getElementById('statPages').classList.remove('loading');
+
+    const { count } = await sb.from('products').select('id', { count: 'exact', head: true }).eq('is_active', true);
+    const total = (count || 0) + STATIC_PAGES.length;
+
+    document.getElementById('statProducts').textContent = count || 0;
+    document.getElementById('statProducts').classList.remove('loading');
+    document.getElementById('statTotal').textContent    = total;
+    document.getElementById('statTotal').classList.remove('loading');
+  }
+
+  async function generate() {
+    const btn    = document.getElementById('btnGenerate');
+    const status = document.getElementById('status');
+
+    btn.disabled     = true;
+    btn.textContent  = '⏳ Mengambil data...';
+    status.className = 'status';
+    status.textContent = '';
+
+    try {
+    const { data: products, error } = await sb
+        .from('products')
+        .select('id, name, created_at')
+        .eq('is_active', true)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      const today = new Date().toISOString().split('T')[0];
+
+      let urls = '';
+
+      // Static pages
+      for (const page of STATIC_PAGES) {
+        urls += `
+  <url>
+    <loc>${BASE_URL}${page.path}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>${page.changefreq}</changefreq>
+    <priority>${page.priority}</priority>
+  </url>`;
+      }
+
+      // Product pages
+      for (const p of products || []) {
+       const lastmod = p.created_at ? p.created_at.split('T')[0] : today;
+        urls += `
+  <url>
+    <loc>${BASE_URL}/Customer/product-detail.html?id=${p.id}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>`;
+      }
+
+      xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls}
+</urlset>`;
+
+      // Update stats
+      const total = STATIC_PAGES.length + (products?.length || 0);
+      document.getElementById('statProducts').textContent = products?.length || 0;
+      document.getElementById('statTotal').textContent    = total;
+
+      // Show preview
+      const preview = document.getElementById('preview');
+      preview.className = 'preview';
+      preview.textContent = xmlContent;
+
+      // Show download button
+      document.getElementById('btnDownload').style.display = 'block';
+
+      status.className   = 'status success';
+      status.textContent = `✓ Berhasil — ${total} URL digenerate (${products?.length || 0} produk + ${STATIC_PAGES.length} halaman statis)`;
+
+    } catch (e) {
+      status.className   = 'status error';
+      status.textContent = '✕ Gagal: ' + (e.message || 'Cek koneksi internet');
+      console.error(e);
+    } finally {
+      btn.disabled    = false;
+      btn.textContent = '⚡ Generate Ulang';
+    }
+  }
+
+  function download() {
+    if (!xmlContent) return;
+    const blob = new Blob([xmlContent], { type: 'application/xml' });
+    const a    = document.createElement('a');
+    a.href     = URL.createObjectURL(blob);
+    a.download = 'Sitemap.xml';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  init();
+</script>
+
+</body>
+</html>
