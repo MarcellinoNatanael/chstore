@@ -1472,4 +1472,21 @@ ul { list-style: none; }
     max-width: var(--max);
     box-sizing: border-box;
   }
+
+  /* Fix scroll mobile */
+html, body {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
+}
+
+.carousel-track {
+  touch-action: pan-x;
+  overscroll-behavior-x: contain;
+}
+
+.hero-slider,
+.promo-banner {
+  touch-action: pan-x;
+}
+
 }
